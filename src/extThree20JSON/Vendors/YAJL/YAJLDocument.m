@@ -1,36 +1,51 @@
 //
-//  YAJLDocument.m
-//  YAJL
+//    YAJLDocument.m
+//    YAJL
 //
-//  Created by Gabriel Handford on 3/1/09.
-//  Copyright 2009. All rights reserved.
+//    Created by Gabriel Handford on 3/1/09.
+//    Copyright 2009. All rights reserved.
 //
-//  Permission is hereby granted, free of charge, to any person
-//  obtaining a copy of this software and associated documentation
-//  files (the "Software"), to deal in the Software without
-//  restriction, including without limitation the rights to use,
-//  copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the
-//  Software is furnished to do so, subject to the following
-//  conditions:
+//    Permission is hereby granted, free of charge, to any person
+//    obtaining a copy of this software and associated documentation
+//    files (the "Software"), to deal in the Software without
+//    restriction, including without limitation the rights to use,
+//    copy, modify, merge, publish, distribute, sublicense, and/or sell
+//    copies of the Software, and to permit persons to whom the
+//    Software is furnished to do so, subject to the following
+//    conditions:
 //
-//  The above copyright notice and this permission notice shall be
-//  included in all copies or substantial portions of the Software.
+//    The above copyright notice and this permission notice shall be
+//    included in all copies or substantial portions of the Software.
 //
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-//  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-//  OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-//  HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-//  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-//  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-//  OTHER DEALINGS IN THE SOFTWARE.
+//    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+//    HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+//    WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+//    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+//    OTHER DEALINGS IN THE SOFTWARE.
 //
 
 
-#import "extThree20JSON/YAJLDocument.h"
+#import "YAJLDocument.h"
 
 @interface YAJLDocument ()
+
+@property (weak) id root; // NSArray or NSDictionary
+@property YAJLParser *parser;
+
+@property (weak) NSMutableDictionary *dict; // if map in progress, points to the current map
+@property (weak) NSMutableArray *array; // If array in progress, points the current array
+@property (weak) NSString *key; // If map in progress, points to current key
+
+@property NSMutableArray *stack;
+@property NSMutableArray *keyStack;
+
+@property YAJLDecoderCurrentType currentType;
+
+@property YAJLParserStatus parserStatus;
+
 - (void)_pop;
 - (void)_popKey;
 @end
@@ -39,137 +54,124 @@ NSInteger YAJLDocumentStackCapacity = 20;
 
 @implementation YAJLDocument
 
-@synthesize root=root_, parserStatus=parserStatus_, delegate=delegate_;
-
-- (id)init {
-  return [self initWithParserOptions:0];
+- (instancetype)init {
+    return [self initWithParserOptions:0];
 }
 
-- (id)initWithParserOptions:(YAJLParserOptions)parserOptions {
-  return [self initWithParserOptions:parserOptions capacity:YAJLDocumentStackCapacity];
+- (instancetype)initWithParserOptions:(YAJLParserOptions)parserOptions {
+    return [self initWithParserOptions:parserOptions capacity:YAJLDocumentStackCapacity];
 }
 
-- (id)initWithParserOptions:(YAJLParserOptions)parserOptions capacity:(NSInteger)capacity {
-  if ((self = [super init])) {
-    stack_ = [[NSMutableArray alloc] initWithCapacity:YAJLDocumentStackCapacity];
-    keyStack_ = [[NSMutableArray alloc] initWithCapacity:YAJLDocumentStackCapacity];
-    parserStatus_ = YAJLParserStatusNone;
-    parser_ = [[YAJLParser alloc] initWithParserOptions:parserOptions];
-    parser_.delegate = self;
-  }
-  return self;
+- (instancetype)initWithParserOptions:(YAJLParserOptions)parserOptions capacity:(NSInteger)capacity {
+    if ((self = [super init])) {
+        _stack = [[NSMutableArray alloc] initWithCapacity:YAJLDocumentStackCapacity];
+        _keyStack = [[NSMutableArray alloc] initWithCapacity:YAJLDocumentStackCapacity];
+        _parserStatus = YAJLParserStatusNone;
+        _parser = [[YAJLParser alloc] initWithParserOptions:parserOptions];
+        _parser.delegate = self;
+    }
+    return self;
 }
 
-- (id)initWithData:(NSData *)data parserOptions:(YAJLParserOptions)parserOptions error:(NSError **)error {
-  return [self initWithData:data parserOptions:parserOptions capacity:YAJLDocumentStackCapacity error:error];
+- (instancetype)initWithData:(NSData *)data parserOptions:(YAJLParserOptions)parserOptions error:(NSError **)error {
+    return [self initWithData:data parserOptions:parserOptions capacity:YAJLDocumentStackCapacity error:error];
 }
 
-- (id)initWithData:(NSData *)data parserOptions:(YAJLParserOptions)parserOptions capacity:(NSInteger)capacity error:(NSError **)error {
-  if ((self = [self initWithParserOptions:parserOptions capacity:capacity])) {
-    [self parse:data error:error];
-  }
-  return self;
-}
-
-- (void)dealloc {
-  [stack_ release];
-  [keyStack_ release];
-  parser_.delegate = nil;
-  [parser_ release];
-  [root_ release];
-  [super dealloc];
+- (instancetype)initWithData:(NSData *)data parserOptions:(YAJLParserOptions)parserOptions capacity:(NSInteger)capacity error:(NSError **)error {
+    if ((self = [self initWithParserOptions:parserOptions capacity:capacity])) {
+        [self parse:data error:error];
+    }
+    return self;
 }
 
 - (YAJLParserStatus)parse:(NSData *)data error:(NSError **)error {
-  parserStatus_ = [parser_ parse:data];
-  if (error) *error = [parser_ parserError];
-  return parserStatus_;
+    _parserStatus = [_parser parse:data];
+    if (error) *error = _parser.parserError;
+    return _parserStatus;
 }
 
 #pragma mark Delegates
 
 - (void)parser:(YAJLParser *)parser didAdd:(id)value {
-  switch(currentType_) {
-    case YAJLDecoderCurrentTypeArray:
-      [array_ addObject:value];
-      if ([delegate_ respondsToSelector:@selector(document:didAddObject:toArray:)])
-        [delegate_ document:self didAddObject:value toArray:array_];
-      break;
-    case YAJLDecoderCurrentTypeDict:
-      NSParameterAssert(key_);
-      [dict_ setObject:value forKey:key_];
-      if ([delegate_ respondsToSelector:@selector(document:didSetObject:forKey:inDictionary:)])
-        [delegate_ document:self didSetObject:value forKey:key_ inDictionary:dict_];
-      [self _popKey];
-      break;
-  }
+    switch (_currentType) {
+        case YAJLDecoderCurrentTypeArray:
+        [_array addObject:value];
+        if ([_delegate respondsToSelector:@selector(document:didAddObject:toArray:)])
+        [_delegate document:self didAddObject:value toArray:_array];
+        break;
+        case YAJLDecoderCurrentTypeDict:
+        NSParameterAssert(_key);
+        if (value) _dict[_key] = value;
+        if ([_delegate respondsToSelector:@selector(document:didSetObject:forKey:inDictionary:)])
+        [_delegate document:self didSetObject:value forKey:_key inDictionary:_dict];
+        [self _popKey];
+        break;
+        default:
+        break;
+    }
 }
 
 - (void)parser:(YAJLParser *)parser didMapKey:(NSString *)key {
-  key_ = key;
-  [keyStack_ addObject:key_]; // Push
+    _key = key;
+    [_keyStack addObject:_key]; // Push
 }
 
 - (void)_popKey {
-  key_ = nil;
-  [keyStack_ removeLastObject]; // Pop
-  if ([keyStack_ count] > 0)
-    key_ = [keyStack_ objectAtIndex:[keyStack_ count]-1];
+    _key = nil;
+    [_keyStack removeLastObject]; // Pop
+    if (_keyStack.count > 0)
+    _key = _keyStack[_keyStack.count-1];
 }
 
 - (void)parserDidStartDictionary:(YAJLParser *)parser {
-  NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:YAJLDocumentStackCapacity];
-  if (!root_) root_ = [dict retain];
-  [stack_ addObject:dict]; // Push
-  [dict release];
-  dict_ = dict;
-  currentType_ = YAJLDecoderCurrentTypeDict;
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:YAJLDocumentStackCapacity];
+    if (!_root) _root = dict;
+    [_stack addObject:dict]; // Push
+    _dict = dict;
+    _currentType = YAJLDecoderCurrentTypeDict;
 }
 
 - (void)parserDidEndDictionary:(YAJLParser *)parser {
-  id value = [[stack_ objectAtIndex:[stack_ count]-1] retain];
-  NSDictionary *dict = dict_;
-  [self _pop];
-  [self parser:parser didAdd:value];
-  [value release];
-  if ([delegate_ respondsToSelector:@selector(document:didAddDictionary:)])
-    [delegate_ document:self didAddDictionary:dict];
+    id value = _stack[_stack.count-1];
+    NSDictionary *dict = _dict;
+    [self _pop];
+    [self parser:parser didAdd:value];
+    if ([_delegate respondsToSelector:@selector(document:didAddDictionary:)])
+    [_delegate document:self didAddDictionary:dict];
 }
 
 - (void)parserDidStartArray:(YAJLParser *)parser {
-  NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:YAJLDocumentStackCapacity];
-  if (!root_) root_ = [array retain];
-  [stack_ addObject:array]; // Push
-  [array release];
-  array_ = array;
-  currentType_ = YAJLDecoderCurrentTypeArray;
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:YAJLDocumentStackCapacity];
+    if (!_root) _root = array;
+    [_stack addObject:array]; // Push
+    _array = array;
+    _currentType = YAJLDecoderCurrentTypeArray;
 }
 
 - (void)parserDidEndArray:(YAJLParser *)parser {
-  id value = [[stack_ objectAtIndex:[stack_ count]-1] retain];
-  NSArray *array = array_;
-  [self _pop];
-  [self parser:parser didAdd:value];
-  [value release];
-  if ([delegate_ respondsToSelector:@selector(document:didAddArray:)])
-    [delegate_ document:self didAddArray:array];
+    id value = _stack[_stack.count-1];
+    NSArray *array = _array;
+    [self _pop];
+    [self parser:parser didAdd:value];
+    if ([_delegate respondsToSelector:@selector(document:didAddArray:)])
+    [_delegate document:self didAddArray:array];
 }
 
 - (void)_pop {
-  [stack_ removeLastObject];
-  array_ = nil;
-  dict_ = nil;
-  currentType_ = YAJLDecoderCurrentTypeNone;
-
-  id value = nil;
-  if ([stack_ count] > 0) value = [stack_ objectAtIndex:[stack_ count]-1];
-  if ([value isKindOfClass:[NSArray class]]) {
-    array_ = (NSMutableArray *)value;
-    currentType_ = YAJLDecoderCurrentTypeArray;
-  } else if ([value isKindOfClass:[NSDictionary class]]) {
-    dict_ = (NSMutableDictionary *)value;
-    currentType_ = YAJLDecoderCurrentTypeDict;
-  }
+    [_stack removeLastObject];
+    _array = nil;
+    _dict = nil;
+    _currentType = YAJLDecoderCurrentTypeNone;
+    
+    id value = nil;
+    if (_stack.count > 0) value = _stack[_stack.count-1];
+    if ([value isKindOfClass:[NSArray class]]) {
+        _array = (NSMutableArray *)value;
+        _currentType = YAJLDecoderCurrentTypeArray;
+    } else if ([value isKindOfClass:[NSDictionary class]]) {
+        _dict = (NSMutableDictionary *)value;
+        _currentType = YAJLDecoderCurrentTypeDict;
+    }
 }
 
 @end

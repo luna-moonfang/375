@@ -27,19 +27,18 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#include "extThree20JSON/yajl_gen.h"
+@import Foundation;
 
 
 extern NSString *const YAJLGenInvalidObjectException; //! Exception type if we encounter invalid object
 
 //! JSON generate options
-enum YAJLGenOptions {
+typedef NS_ENUM(NSUInteger, YAJLGenOptions) {
   YAJLGenOptionsNone = 0, //!< No options
   YAJLGenOptionsBeautify = 1 << 0, //!< Beautifiy JSON output
   YAJLGenOptionsIgnoreUnknownTypes = 1 << 1, //!< Ignore unknown types (will use null value)
   YAJLGenOptionsIncludeUnsupportedTypes = 1 << 2, //!< Handle non-JSON types (including NSDate, NSData, NSURL)
 };
-typedef NSUInteger YAJLGenOptions;
 
 /*!
  YAJL JSON string generator.
@@ -49,18 +48,14 @@ typedef NSUInteger YAJLGenOptions;
  - NSString
  - NSNumber
  - NSNull
-
+ 
  We also support the following types (if using YAJLGenOptionsIncludeUnsupportedTypes option),
  by converting to JSON supported types:
  - NSDate: number representing number of milliseconds since (1970) epoch
  - NSData: Base64 encoded string
- - NSURL: URL (absolute) string
+ - NSURL: URL (absolute) string 
  */
-@interface YAJLGen : NSObject {
-  yajl_gen gen_;
-
-  YAJLGenOptions genOptions_;
-}
+@interface YAJLGen : NSObject
 
 /*!
  JSON generator with options.
@@ -68,11 +63,11 @@ typedef NSUInteger YAJLGenOptions;
   - YAJLGenOptionsNone: No options
   - YAJLGenOptionsBeautify: Beautifiy JSON output
   - YAJLGenOptionsIgnoreUnknownTypes: Ignore unknown types (will use null value)
-  - YAJLGenOptionsIncludeUnsupportedTypes: Handle non-JSON types (including NSDate, NSData, NSURL)
-
+  - YAJLGenOptionsIncludeUnsupportedTypes: Handle non-JSON types (including NSDate, NSData, NSURL) 
+ 
  @param indentString String for indentation
  */
-- (id)initWithGenOptions:(YAJLGenOptions)genOptions indentString:(NSString *)indentString;
+- (instancetype)initWithGenOptions:(YAJLGenOptions)genOptions indentString:(NSString *)indentString NS_DESIGNATED_INITIALIZER;
 
 /*!
  Write JSON for object to buffer.
@@ -131,30 +126,30 @@ typedef NSUInteger YAJLGenOptions;
 /*!
  Get current JSON buffer.
  */
-- (NSString *)buffer;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *buffer;
 
 @end
 
 
 /*!
  Custom objects can support manual JSON encoding.
-
+ 
  @code
  @interface CustomObject : NSObject
  @end
-
+ 
  @implementation CustomObject
-
+ 
  - (id)JSON {
  return [NSArray arrayWithObject:[NSNumber numberWithInteger:1]];
  }
-
+ 
  @end
  @endcode
-
+ 
  And then:
-
- @code
+ 
+ @code 
  CustomObject *customObject = [[CustomObject alloc] init];
  NSString *JSONString = [customObject yajl_JSON];
  // JSONString == "[1]";
@@ -166,6 +161,6 @@ typedef NSUInteger YAJLGenOptions;
  Provide custom and/or encodable object to parse to JSON string.
  @result Object encodable as JSON such as NSDictionary, NSArray, etc
  */
-- (id)JSON;
+@property (NS_NONATOMIC_IOSONLY, readonly, strong) id JSON;
 
 @end

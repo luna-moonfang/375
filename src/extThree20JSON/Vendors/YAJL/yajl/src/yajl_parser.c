@@ -1,39 +1,24 @@
 /*
- * Copyright 2010, Lloyd Hilaiel.
+ * Copyright (c) 2007-2014, Lloyd Hilaiel <me@lloyd.io>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
  *
- *  1. Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *  2. Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *  3. Neither the name of Lloyd Hilaiel nor the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "extThree20JSON/private/yajl_lex.h"
-#include "extThree20JSON/private/yajl_parser.h"
-#include "extThree20JSON/private/yajl_encode.h"
-#include "extThree20JSON/private/yajl_bytestack.h"
+#include "api/yajl_parse.h"
+#include "yajl_lex.h"
+#include "yajl_parser.h"
+#include "yajl_encode.h"
+#include "yajl_bytestack.h"
 
 #include <stdlib.h>
 #include <limits.h>
@@ -44,11 +29,43 @@
 #include <assert.h>
 #include <math.h>
 
+#define MAX_VALUE_TO_MULTIPLY ((LLONG_MAX / 10) + (LLONG_MAX % 10))
+
+ /* same semantics as strtol */
+long long
+yajl_parse_integer(const unsigned char *number, size_t length)
+{
+    long long ret  = 0;
+    long sign = 1;
+    const unsigned char *pos = number;
+    if (*pos == '-') { pos++; sign = -1; }
+    if (*pos == '+') { pos++; }
+
+    while (pos < number + length) {
+        if ( ret > MAX_VALUE_TO_MULTIPLY ) {
+            errno = ERANGE;
+            return sign == 1 ? LLONG_MAX : LLONG_MIN;
+        }
+        ret *= 10;
+        if (LLONG_MAX - ret < (*pos - '0')) {
+            errno = ERANGE;
+            return sign == 1 ? LLONG_MAX : LLONG_MIN;
+        }
+        if (*pos < '0' || *pos > '9') {
+            errno = ERANGE;
+            return sign == 1 ? LLONG_MAX : LLONG_MIN;
+        }
+        ret += (*pos++ - '0');
+    }
+
+    return sign * ret;
+}
+
 unsigned char *
 yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
-                         unsigned int jsonTextLen, int verbose)
+                         size_t jsonTextLen, int verbose)
 {
-    unsigned int offset = hand->bytesConsumed;
+    size_t offset = hand->bytesConsumed;
     unsigned char * str;
     const char * errorType = NULL;
     const char * errorText = NULL;
@@ -66,7 +83,7 @@ yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
     }
 
     {
-        unsigned int memneeded = 0;
+        size_t memneeded = 0;
         memneeded += strlen(errorType);
         memneeded += strlen(" error");
         if (errorText != NULL) {
@@ -74,6 +91,7 @@ yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
             memneeded += strlen(errorText);
         }
         str = (unsigned char *) YA_MALLOC(&(hand->alloc), memneeded + 2);
+        if (!str) return NULL;
         str[0] = 0;
         strcat((char *) str, errorType);
         strcat((char *) str, " error");
@@ -87,8 +105,8 @@ yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
     /* now we append as many spaces as needed to make sure the error
      * falls at char 41, if verbose was specified */
     if (verbose) {
-        unsigned int start, end, i;
-        unsigned int spacesNeeded;
+        size_t start, end, i;
+        size_t spacesNeeded;
 
         spacesNeeded = (offset < 30 ? 40 - offset : 10);
         start = (offset >= 30 ? offset - 30 : 0);
@@ -111,13 +129,15 @@ yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
         text[i] = 0;
         {
             char * newStr = (char *)
-                YA_MALLOC(&(hand->alloc), (strlen((char *) str) +
-                                           strlen((char *) text) +
-                                           strlen(arrow) + 1));
-            newStr[0] = 0;
-            strcat((char *) newStr, (char *) str);
-            strcat((char *) newStr, text);
-            strcat((char *) newStr, arrow);
+                YA_MALLOC(&(hand->alloc), (unsigned int)(strlen((char *) str) +
+                                                         strlen((char *) text) +
+                                                         strlen(arrow) + 1));
+            if (newStr) {
+                newStr[0] = 0;
+                strcat((char *) newStr, (char *) str);
+                strcat((char *) newStr, text);
+                strcat((char *) newStr, arrow);
+            }
             YA_FREE(&(hand->alloc), str);
             str = (unsigned char *) newStr;
         }
@@ -136,34 +156,77 @@ yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
 
 
 yajl_status
+yajl_do_finish(yajl_handle hand)
+{
+    yajl_status stat;
+    stat = yajl_do_parse(hand,(const unsigned char *) " ",1);
+
+    if (stat != yajl_status_ok) return stat;
+
+    switch(yajl_bs_current(hand->stateStack))
+    {
+        case yajl_state_parse_error:
+        case yajl_state_lexical_error:
+            return yajl_status_error;
+        case yajl_state_got_value:
+        case yajl_state_parse_complete:
+            return yajl_status_ok;
+        default:
+            if (!(hand->flags & yajl_allow_partial_values))
+            {
+                yajl_bs_set(hand->stateStack, yajl_state_parse_error);
+                hand->parseError = "premature EOF";
+                return yajl_status_error;
+            }
+            return yajl_status_ok;
+    }
+}
+
+yajl_status
 yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
-              unsigned int jsonTextLen)
+              size_t jsonTextLen)
 {
     yajl_tok tok;
     const unsigned char * buf;
-    unsigned int bufLen;
-    unsigned int * offset = &(hand->bytesConsumed);
+    size_t bufLen;
+    size_t * offset = &(hand->bytesConsumed);
 
     *offset = 0;
-
 
   around_again:
     switch (yajl_bs_current(hand->stateStack)) {
         case yajl_state_parse_complete:
+            if (hand->flags & yajl_allow_multiple_values) {
+                yajl_bs_set(hand->stateStack, yajl_state_got_value);
+                goto around_again;
+            }
+            if (!(hand->flags & yajl_allow_trailing_garbage)) {
+                if (*offset != jsonTextLen) {
+                    tok = yajl_lex_lex(hand->lexer, jsonText, jsonTextLen,
+                                       offset, &buf, &bufLen);
+                    if (tok != yajl_tok_eof) {
+                        yajl_bs_set(hand->stateStack, yajl_state_parse_error);
+                        hand->parseError = "trailing garbage";
+                    }
+                    goto around_again;
+                }
+            }
             return yajl_status_ok;
         case yajl_state_lexical_error:
         case yajl_state_parse_error:
             return yajl_status_error;
         case yajl_state_start:
+        case yajl_state_got_value:
         case yajl_state_map_need_val:
         case yajl_state_array_need_val:
-        case yajl_state_array_start: {
+        case yajl_state_array_start:  {
             /* for arrays and maps, we advance the state for this
              * depth, then push the state of the next depth.
              * If an error occurs during the parsing of the nesting
              * enitity, the state at this level will not matter.
              * a state that needs pushing will be anything other
              * than state_start */
+
             yajl_state stateToPush = yajl_state_start;
 
             tok = yajl_lex_lex(hand->lexer, jsonText, jsonTextLen,
@@ -171,7 +234,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
 
             switch (tok) {
                 case yajl_tok_eof:
-                    return yajl_status_insufficient_data;
+                    return yajl_status_ok;
                 case yajl_tok_error:
                     yajl_bs_set(hand->stateStack, yajl_state_lexical_error);
                     goto around_again;
@@ -214,29 +277,15 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                     stateToPush = yajl_state_array_start;
                     break;
                 case yajl_tok_integer:
-                    /*
-                     * note.  strtol does not respect the length of
-                     * the lexical token.  in a corner case where the
-                     * lexed number is a integer with a trailing zero,
-                     * immediately followed by the end of buffer,
-                     * sscanf could run off into oblivion and cause a
-                     * crash.  for this reason we copy the integer
-                     * (and doubles), into our parse buffer (the same
-                     * one used for unescaping strings), before
-                     * calling strtol.  yajl_buf ensures null padding,
-                     * so we're safe.
-                     */
                     if (hand->callbacks) {
                         if (hand->callbacks->yajl_number) {
                             _CC_CHK(hand->callbacks->yajl_number(
                                         hand->ctx,(const char *) buf, bufLen));
                         } else if (hand->callbacks->yajl_integer) {
-                            long int i = 0;
-                            yajl_buf_clear(hand->decodeBuf);
-                            yajl_buf_append(hand->decodeBuf, buf, bufLen);
-                            buf = yajl_buf_data(hand->decodeBuf);
-                            i = strtol((const char *) buf, NULL, 10);
-                            if ((i == LONG_MIN || i == LONG_MAX) &&
+                            long long int i = 0;
+                            errno = 0;
+                            i = yajl_parse_integer(buf, bufLen);
+                            if ((i == LLONG_MIN || i == LLONG_MAX) &&
                                 errno == ERANGE)
                             {
                                 yajl_bs_set(hand->stateStack,
@@ -262,6 +311,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                             yajl_buf_clear(hand->decodeBuf);
                             yajl_buf_append(hand->decodeBuf, buf, bufLen);
                             buf = yajl_buf_data(hand->decodeBuf);
+                            errno = 0;
                             d = strtod((char *) buf, NULL);
                             if ((d == HUGE_VAL || d == -HUGE_VAL) &&
                                 errno == ERANGE)
@@ -309,7 +359,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
             /* got a value.  transition depends on the state we're in. */
             {
                 yajl_state s = yajl_bs_current(hand->stateStack);
-                if (s == yajl_state_start) {
+                if (s == yajl_state_start || s == yajl_state_got_value) {
                     yajl_bs_set(hand->stateStack, yajl_state_parse_complete);
                 } else if (s == yajl_state_map_need_val) {
                     yajl_bs_set(hand->stateStack, yajl_state_map_got_val);
@@ -332,7 +382,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                                offset, &buf, &bufLen);
             switch (tok) {
                 case yajl_tok_eof:
-                    return yajl_status_insufficient_data;
+                    return yajl_status_ok;
                 case yajl_tok_error:
                     yajl_bs_set(hand->stateStack, yajl_state_lexical_error);
                     goto around_again;
@@ -364,7 +414,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                 default:
                     yajl_bs_set(hand->stateStack, yajl_state_parse_error);
                     hand->parseError =
-                        "invalid object key (must be a string)";
+                        "invalid object key (must be a string)"; 
                     goto around_again;
             }
         }
@@ -376,7 +426,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                     yajl_bs_set(hand->stateStack, yajl_state_map_need_val);
                     goto around_again;
                 case yajl_tok_eof:
-                    return yajl_status_insufficient_data;
+                    return yajl_status_ok;
                 case yajl_tok_error:
                     yajl_bs_set(hand->stateStack, yajl_state_lexical_error);
                     goto around_again;
@@ -401,7 +451,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                     yajl_bs_set(hand->stateStack, yajl_state_map_need_key);
                     goto around_again;
                 case yajl_tok_eof:
-                    return yajl_status_insufficient_data;
+                    return yajl_status_ok;
                 case yajl_tok_error:
                     yajl_bs_set(hand->stateStack, yajl_state_lexical_error);
                     goto around_again;
@@ -429,7 +479,7 @@ yajl_do_parse(yajl_handle hand, const unsigned char * jsonText,
                     yajl_bs_set(hand->stateStack, yajl_state_array_need_val);
                     goto around_again;
                 case yajl_tok_eof:
-                    return yajl_status_insufficient_data;
+                    return yajl_status_ok;
                 case yajl_tok_error:
                     yajl_bs_set(hand->stateStack, yajl_state_lexical_error);
                     goto around_again;

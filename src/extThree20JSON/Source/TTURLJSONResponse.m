@@ -66,7 +66,7 @@
     }
 #elif defined(EXTJSON_YAJL)
     @try {
-      _rootObject = [[data yajl_JSON] retain];
+      _rootObject = [data yajl_JSON];
     }
     @catch (NSException* exception) {
       err = [NSError errorWithDomain:kTTExtJSONErrorDomain

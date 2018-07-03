@@ -27,8 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
-#include "extThree20JSON/yajl_parse.h"
+@import Foundation;
 
 
 extern NSString *const YAJLErrorDomain; //! Error domain for YAJL
@@ -38,30 +37,26 @@ extern NSString *const YAJLParsingUnsupportedException; //! Parsing unsupported 
 extern NSString *const YAJLParserValueKey; //! Key in NSError userInfo for value we errored on
 
 //! Parser error codes
-enum YAJLParserErrorCode {
+typedef NS_ENUM(NSInteger, YAJLParserErrorCode) {
   YAJLParserErrorCodeAllocError = -1000, //!< Alloc error
   YAJLParserErrorCodeDoubleOverflow = -1001, //!< Double overflow
   YAJLParserErrorCodeIntegerOverflow = -1002 //!< Integer overflow
 };
-typedef NSInteger YAJLParserErrorCode; //! Parser error codes
 
 //! Parser options
-enum YAJLParserOptions {
+typedef NS_ENUM(NSUInteger, YAJLParserOptions) {
   YAJLParserOptionsNone = 0, //!< No options
   YAJLParserOptionsAllowComments = 1 << 0, //!< Javascript style comments will be allowed in the input (both /&asterisk; &asterisk;/ and //)
   YAJLParserOptionsCheckUTF8 = 1 << 1, //!< Invalid UTF8 strings will cause a parse error
   YAJLParserOptionsStrictPrecision = 1 << 2, //!< If YES will force strict precision and return integer overflow error
 };
-typedef NSUInteger YAJLParserOptions; //! Parser options
 
 //! Parser status
-enum {
+typedef NS_ENUM(NSUInteger, YAJLParserStatus) {
   YAJLParserStatusNone = 0,  //!< No status
   YAJLParserStatusOK = 1, //!< Parsed OK
-  YAJLParserStatusInsufficientData = 2, //!< There was insufficient data
   YAJLParserStatusError = 3 //!< Parser errored
 };
-typedef NSUInteger YAJLParserStatus; //!< Status of the last parse event
 
 
 @class YAJLParser;
@@ -113,45 +108,37 @@ typedef NSUInteger YAJLParserStatus; //!< Status of the last parse event
 
 /*!
  JSON parser.
-
+ 
  @code
  NSData *data = [NSData dataWithContentsOfFile:@"example.json"];
-
+ 
  YAJLParser *parser = [[YAJLParser alloc] initWithParserOptions:YAJLParserOptionsAllowComments];
  parser.delegate = self;
  [parser parse:data];
  if (parser.parserError) {
    NSLog(@"Error:\n%@", parser.parserError);
  }
-
+ 
  parser.delegate = nil;
  [parser release];
-
+ 
  // Include delegate methods from YAJLParserDelegate
  - (void)parserDidStartDictionary:(YAJLParser *)parser { }
  - (void)parserDidEndDictionary:(YAJLParser *)parser { }
-
+ 
  - (void)parserDidStartArray:(YAJLParser *)parser { }
  - (void)parserDidEndArray:(YAJLParser *)parser { }
-
+ 
  - (void)parser:(YAJLParser *)parser didMapKey:(NSString *)key { }
  - (void)parser:(YAJLParser *)parser didAdd:(id)value { }
   @endcode
  */
-@interface YAJLParser : NSObject {
+@interface YAJLParser : NSObject
 
-  yajl_handle handle_;
-
-  __weak id <YAJLParserDelegate> delegate_; // weak
-
-  YAJLParserOptions parserOptions_;
-
-  NSError *parserError_;
-}
-
-@property (assign, nonatomic) __weak id <YAJLParserDelegate> delegate;
-@property (readonly, retain, nonatomic) NSError *parserError;
+@property (weak, nonatomic) id <YAJLParserDelegate> delegate;
+@property (readonly, strong, nonatomic) NSError *parserError;
 @property (readonly, nonatomic) YAJLParserOptions parserOptions;
+@property (readonly, nonatomic) unsigned int bytesConsumed;
 
 /*!
  Create parser with data and options.
@@ -161,18 +148,18 @@ typedef NSUInteger YAJLParserStatus; //!< Status of the last parse event
   - YAJLParserOptionsCheckUTF8: Invalid UTF8 strings will cause a parse error
   - YAJLParserOptionsStrictPrecision: If YES will force strict precision and return integer overflow error
  */
-- (id)initWithParserOptions:(YAJLParserOptions)parserOptions;
+- (instancetype)initWithParserOptions:(YAJLParserOptions)parserOptions NS_DESIGNATED_INITIALIZER;
 
 /*!
  Parse data.
-
- If streaming, you can call parse multiple times as long as
+ 
+ If streaming, you can call parse multiple times as long as 
  previous calls return YAJLParserStatusInsufficientData.
-
+ 
  @param data
  @result Parser status
   - YAJLParserStatusNone: No status
-  - YAJLParserStatusOK: Parsed OK
+  - YAJLParserStatusOK: Parsed OK 
   - YAJLParserStatusInsufficientData: There was insufficient data
   - YAJLParserStatusError: Parser errored
  */
