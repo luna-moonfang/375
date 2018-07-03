@@ -54,7 +54,7 @@
   extension.copyright = [extension.copyright stringByAppendingString:@" 2009 Gabriel Handford. 2010 Lloyd Hilaiel."];
 #endif
 
-  return [extension autorelease];
+  return extension;
 }
 
 

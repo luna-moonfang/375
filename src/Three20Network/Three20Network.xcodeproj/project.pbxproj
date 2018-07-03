@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		664B29BF12848AA50008D569 /* TTErrorCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = 664B29BC12848AA50008D569 /* TTErrorCodes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		664B29C312848AAD0008D569 /* TTErrorCodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 664B29C012848AAD0008D569 /* TTErrorCodes.m */; };
+		664B29C312848AAD0008D569 /* TTErrorCodes.m in Sources */ = {isa = PBXBuildFile; fileRef = 664B29C012848AAD0008D569 /* TTErrorCodes.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		66F955B0126662E300BEF6F0 /* NetworkURLCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F955AF126662E300BEF6F0 /* NetworkURLCacheTests.m */; };
 		66F955BA1266647A00BEF6F0 /* both.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F955B71266647A00BEF6F0 /* both.png */; };
 		66F955BB1266647A00BEF6F0 /* both@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66F955B81266647A00BEF6F0 /* both@2x.png */; };
@@ -16,8 +16,8 @@
 		6DB66E8614B90568003581DF /* NetworkRequestTimeoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D64C15814B7C9C100BF5E23 /* NetworkRequestTimeoutTests.m */; };
 		6EE735F8118499D300A35176 /* Three20Network.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE735F7118499D300A35176 /* Three20Network.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EE735FA118499FB00A35176 /* TTGlobalNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE735F9118499FB00A35176 /* TTGlobalNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6EE735FC11849A0C00A35176 /* TTGlobalNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE735FB11849A0C00A35176 /* TTGlobalNetwork.m */; };
-		6EE735FF11849A1600A35176 /* TTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE735FE11849A1600A35176 /* TTUserInfo.m */; };
+		6EE735FC11849A0C00A35176 /* TTGlobalNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE735FB11849A0C00A35176 /* TTGlobalNetwork.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE735FF11849A1600A35176 /* TTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE735FE11849A1600A35176 /* TTUserInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6EE7360211849A1F00A35176 /* TTUserInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7360111849A1F00A35176 /* TTUserInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EE7361411849A3500A35176 /* TTModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7360811849A3500A35176 /* TTModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EE7361511849A3500A35176 /* TTModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7360911849A3500A35176 /* TTModelDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,14 +31,14 @@
 		6EE7361D11849A3500A35176 /* TTURLRequestModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7361111849A3500A35176 /* TTURLRequestModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EE7361E11849A3500A35176 /* TTURLRequestQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7361211849A3500A35176 /* TTURLRequestQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EE7361F11849A3500A35176 /* TTURLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7361311849A3500A35176 /* TTURLResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6EE7362811849A4000A35176 /* TTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362011849A4000A35176 /* TTModel.m */; };
-		6EE7362911849A4000A35176 /* TTRequestLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362111849A4000A35176 /* TTRequestLoader.m */; };
-		6EE7362A11849A4000A35176 /* TTURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362211849A4000A35176 /* TTURLCache.m */; };
-		6EE7362B11849A4000A35176 /* TTURLDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362311849A4000A35176 /* TTURLDataResponse.m */; };
-		6EE7362C11849A4000A35176 /* TTURLImageResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362411849A4000A35176 /* TTURLImageResponse.m */; };
-		6EE7362D11849A4000A35176 /* TTURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362511849A4000A35176 /* TTURLRequest.m */; };
-		6EE7362E11849A4000A35176 /* TTURLRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362611849A4000A35176 /* TTURLRequestModel.m */; };
-		6EE7362F11849A4000A35176 /* TTURLRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362711849A4000A35176 /* TTURLRequestQueue.m */; };
+		6EE7362811849A4000A35176 /* TTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362011849A4000A35176 /* TTModel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362911849A4000A35176 /* TTRequestLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362111849A4000A35176 /* TTRequestLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362A11849A4000A35176 /* TTURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362211849A4000A35176 /* TTURLCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362B11849A4000A35176 /* TTURLDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362311849A4000A35176 /* TTURLDataResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362C11849A4000A35176 /* TTURLImageResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362411849A4000A35176 /* TTURLImageResponse.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362D11849A4000A35176 /* TTURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362511849A4000A35176 /* TTURLRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362E11849A4000A35176 /* TTURLRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362611849A4000A35176 /* TTURLRequestModel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EE7362F11849A4000A35176 /* TTURLRequestQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7362711849A4000A35176 /* TTURLRequestQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6EE7363A11849A9800A35176 /* MockModelDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7363911849A9800A35176 /* MockModelDelegate.m */; };
 		6EE7363C11849AA100A35176 /* NetworkModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EE7363B11849AA100A35176 /* NetworkModelTests.m */; };
 		6EE7364911849B1D00A35176 /* Three20Network_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 6EE7364811849B1D00A35176 /* Three20Network_Prefix.pch */; };
@@ -602,6 +602,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EE7364B11849B3D00A35176 /* Library.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -630,6 +631,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EE7364B11849B3D00A35176 /* Library.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -641,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EE7364B11849B3D00A35176 /* Library.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ZERO_LINK = NO;
