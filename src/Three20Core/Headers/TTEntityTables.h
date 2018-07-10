@@ -25,7 +25,7 @@
  * Each table is a dictionary of entity names to NSData objects containing the character.
  */
 @interface TTEntityTables : NSObject {
-  NSDictionary* _iso88591;
+    NSDictionary* _iso88591;
 }
 
 /**

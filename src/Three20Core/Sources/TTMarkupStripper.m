@@ -29,9 +29,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
-  TT_RELEASE_SAFELY(_strings);
-
-  [super dealloc];
+    TT_RELEASE_SAFELY(_strings);
+    
+    [super dealloc];
 }
 
 
@@ -43,7 +43,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)parser:(NSXMLParser*)parser foundCharacters:(NSString*)string {
-  [_strings addObject:string];
+    [_strings addObject:string];
 }
 
 
@@ -51,7 +51,7 @@
 - (NSData*)             parser: (NSXMLParser*)parser
      resolveExternalEntityName: (NSString*)entityName
                       systemID: (NSString*)systemID {
-  return [[[TTEntityTables sharedInstance] iso88591] objectForKey:entityName];
+    return [[[TTEntityTables sharedInstance] iso88591] objectForKey:entityName];
 }
 
 
@@ -63,19 +63,19 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString*)parse:(NSString*)text {
-  _strings = [[NSMutableArray alloc] init];
-
-  NSString*     document  = [NSString stringWithFormat:@"<x>%@</x>", text];
-  NSData*       data      = [document dataUsingEncoding:text.fastestEncoding];
-  NSXMLParser*  parser    = [[NSXMLParser alloc] initWithData:data];
-  parser.delegate = self;
-  [parser parse];
-  TT_RELEASE_SAFELY(parser);
-
-  NSString* result = [_strings componentsJoinedByString:@""];
-  TT_RELEASE_SAFELY(_strings);
-
-  return result;
+    _strings = [[NSMutableArray alloc] init];
+    
+    NSString*     document  = [NSString stringWithFormat:@"<x>%@</x>", text];
+    NSData*       data      = [document dataUsingEncoding:text.fastestEncoding];
+    NSXMLParser*  parser    = [[NSXMLParser alloc] initWithData:data];
+    parser.delegate = self;
+    [parser parse];
+    TT_RELEASE_SAFELY(parser);
+    
+    NSString* result = [_strings componentsJoinedByString:@""];
+    TT_RELEASE_SAFELY(_strings);
+    
+    return result;
 }
 
 

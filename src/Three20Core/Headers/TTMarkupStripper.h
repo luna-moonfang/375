@@ -19,15 +19,15 @@
 #if __IPHONE_4_0 && __IPHONE_4_0 <= __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface TTMarkupStripper : NSObject <NSXMLParserDelegate> {
 #else
-@interface TTMarkupStripper : NSObject {
+    @interface TTMarkupStripper : NSObject {
 #endif
-@private
-  NSMutableArray* _strings;
-}
-
-/**
- * Strips markup from the given string and returns the result.
- */
-- (NSString*)parse:(NSString*)string;
-
-@end
+    @private
+        NSMutableArray* _strings;
+    }
+    
+    /**
+     * Strips markup from the given string and returns the result.
+     */
+    - (NSString*)parse:(NSString*)string;
+    
+    @end

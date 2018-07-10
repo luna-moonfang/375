@@ -32,9 +32,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void) addNonEmptyString:(NSString*)string {
-  if (TTIsStringWithAnyText(string)) {
-    [self addObject:string];
-  }
+    if (TTIsStringWithAnyText(string)) {
+        [self addObject:string];
+    }
 }
 
 

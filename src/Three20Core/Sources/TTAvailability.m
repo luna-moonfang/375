@@ -19,15 +19,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTDeviceOSVersionIsAtLeast(double versionNumber) {
-  return kCFCoreFoundationVersionNumber >= versionNumber;
+    return kCFCoreFoundationVersionNumber >= versionNumber;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 Class TTUIPopoverControllerClass() {
-  static Class sClass = nil;
-  if (nil == sClass) {
-    sClass = NSClassFromString(@"UIPopoverController");
-  }
-  return sClass;
+    static Class sClass = nil;
+    if (nil == sClass) {
+        sClass = NSClassFromString(@"UIPopoverController");
+    }
+    return sClass;
 }

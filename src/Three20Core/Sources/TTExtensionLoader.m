@@ -42,124 +42,124 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)callExtensionID:(NSString*)extensionID methodWithPrefix:(NSString*)prefix {
-  SEL selector = NSSelectorFromString([prefix
-                                       stringByAppendingString:extensionID]);
-
-  id result = nil;
-  if ([self respondsToSelector:selector]) {
-    result = [self performSelector:selector];
-  }
-  return result;
+    SEL selector = NSSelectorFromString([prefix
+                                         stringByAppendingString:extensionID]);
+    
+    id result = nil;
+    if ([self respondsToSelector:selector]) {
+        result = [self performSelector:selector];
+    }
+    return result;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (TTExtensionInfo*)extensionWithID:(NSString*)extensionID {
-  TTExtensionInfo* extension = [self callExtensionID: extensionID
-                                    methodWithPrefix: kExtensionInfoMethodPrefix];
-  if (nil == extension) {
-    extension = [[[TTExtensionInfo alloc] init] autorelease];
-  }
-  extension.identifier = extensionID;
-  return extension;
+    TTExtensionInfo* extension = [self callExtensionID: extensionID
+                                      methodWithPrefix: kExtensionInfoMethodPrefix];
+    if (nil == extension) {
+        extension = [[[TTExtensionInfo alloc] init] autorelease];
+    }
+    extension.identifier = extensionID;
+    return extension;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (BOOL)loadExtension:(TTExtensionInfo*)extension {
-  BOOL succeeded = [self callExtensionID: extension.identifier
-                        methodWithPrefix: kLoadExtensionMethodPrefix] ? YES : NO;
-
-  if (succeeded) {
-    [sTTLoadedExtensions setObject:extension forKey:extension.identifier];
-
-  } else {
-    [sTTFailedExtensions setObject:extension forKey:extension.identifier];
-  }
-
-  return succeeded;
+    BOOL succeeded = [self callExtensionID: extension.identifier
+                          methodWithPrefix: kLoadExtensionMethodPrefix] ? YES : NO;
+    
+    if (succeeded) {
+        [sTTLoadedExtensions setObject:extension forKey:extension.identifier];
+        
+    } else {
+        [sTTFailedExtensions setObject:extension forKey:extension.identifier];
+    }
+    
+    return succeeded;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (void)setupStaticData {
-  if (nil == sTTLoadedExtensions) {
-    sTTLoadedExtensions = [[NSMutableDictionary alloc] init];
-  }
-  if (nil == sTTFailedExtensions) {
-    sTTFailedExtensions = [[NSMutableDictionary alloc] init];
-  }
+    if (nil == sTTLoadedExtensions) {
+        sTTLoadedExtensions = [[NSMutableDictionary alloc] init];
+    }
+    if (nil == sTTFailedExtensions) {
+        sTTFailedExtensions = [[NSMutableDictionary alloc] init];
+    }
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (void)loadAllExtensions {
-  [self setupStaticData];
-
-  NSDictionary* availableExtensions = [self availableExtensions];
-
-  if ([availableExtensions count] > 0) {
-    TTExtensionLoader* loader = [[TTExtensionLoader alloc] init];
-
-    for (NSString* extensionID in availableExtensions) {
-      TTExtensionInfo* extension = [availableExtensions objectForKey:extensionID];
-      [loader loadExtension:extension];
+    [self setupStaticData];
+    
+    NSDictionary* availableExtensions = [self availableExtensions];
+    
+    if ([availableExtensions count] > 0) {
+        TTExtensionLoader* loader = [[TTExtensionLoader alloc] init];
+        
+        for (NSString* extensionID in availableExtensions) {
+            TTExtensionInfo* extension = [availableExtensions objectForKey:extensionID];
+            [loader loadExtension:extension];
+        }
+        
+        TT_RELEASE_SAFELY(loader);
     }
-
-    TT_RELEASE_SAFELY(loader);
-  }
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSDictionary*)availableExtensions {
-  if (nil == sTTAvailableExtensions) {
-    sTTAvailableExtensions = [[NSMutableDictionary alloc] init];
-
-    unsigned int methodCount = 0;
-    Method* methods = class_copyMethodList([self class], &methodCount);
-
-    if (nil != methods) {
-      TTExtensionLoader* loader = [[TTExtensionLoader alloc] init];
-
-      for (unsigned int ix = 0; ix < methodCount; ++ix) {
-        Method method = methods[ix];
-
-        SEL methodSelector = method_getName(method);
-
-        NSString* methodName = [NSString stringWithCString: sel_getName(methodSelector)
-                                                  encoding: NSUTF8StringEncoding];
-
-        if ([methodName hasPrefix:kLoadExtensionMethodPrefix]) {
-          NSString* extensionID = [methodName substringFromIndex:
-                                   [kLoadExtensionMethodPrefix length]];
-
-          TTExtensionInfo* extension = [loader extensionWithID:extensionID];
-          TTDASSERT(nil != extension);
-
-          if (nil != extension) {
-            [sTTAvailableExtensions setObject:extension forKey:extensionID];
-          }
+    if (nil == sTTAvailableExtensions) {
+        sTTAvailableExtensions = [[NSMutableDictionary alloc] init];
+        
+        unsigned int methodCount = 0;
+        Method* methods = class_copyMethodList([self class], &methodCount);
+        
+        if (nil != methods) {
+            TTExtensionLoader* loader = [[TTExtensionLoader alloc] init];
+            
+            for (unsigned int ix = 0; ix < methodCount; ++ix) {
+                Method method = methods[ix];
+                
+                SEL methodSelector = method_getName(method);
+                
+                NSString* methodName = [NSString stringWithCString: sel_getName(methodSelector)
+                                                          encoding: NSUTF8StringEncoding];
+                
+                if ([methodName hasPrefix:kLoadExtensionMethodPrefix]) {
+                    NSString* extensionID = [methodName substringFromIndex:
+                                             [kLoadExtensionMethodPrefix length]];
+                    
+                    TTExtensionInfo* extension = [loader extensionWithID:extensionID];
+                    TTDASSERT(nil != extension);
+                    
+                    if (nil != extension) {
+                        [sTTAvailableExtensions setObject:extension forKey:extensionID];
+                    }
+                }
+            }
+            
+            TT_RELEASE_SAFELY(loader);
         }
-      }
-
-      TT_RELEASE_SAFELY(loader);
     }
-  }
-
-  return [NSDictionary dictionaryWithDictionary:sTTAvailableExtensions];
+    
+    return [NSDictionary dictionaryWithDictionary:sTTAvailableExtensions];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSDictionary*)loadedExtensions {
-  return [NSDictionary dictionaryWithDictionary:sTTLoadedExtensions];
+    return [NSDictionary dictionaryWithDictionary:sTTLoadedExtensions];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSDictionary*)failedExtensions {
-  return [NSDictionary dictionaryWithDictionary:sTTFailedExtensions];
+    return [NSDictionary dictionaryWithDictionary:sTTFailedExtensions];
 }
 
 

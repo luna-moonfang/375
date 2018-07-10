@@ -45,14 +45,14 @@
 #define TTLOGLEVEL_ERROR    1
 
 #ifndef TTMAXLOGLEVEL
-  #define TTMAXLOGLEVEL TTLOGLEVEL_WARNING
+#define TTMAXLOGLEVEL TTLOGLEVEL_WARNING
 #endif
 
 // The general purpose logger. This ignores logging levels.
 #ifdef DEBUG
-  #define TTDPRINT(xx, ...)  NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define TTDPRINT(xx, ...)  NSLog(@"%s(%d): " xx, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #else
-  #define TTDPRINT(xx, ...)  ((void)0)
+#define TTDPRINT(xx, ...)  ((void)0)
 #endif // #ifdef DEBUG
 
 // Prints the current method's name.
@@ -66,48 +66,48 @@
 #if TARGET_IPHONE_SIMULATOR
 
 #ifdef __cplusplus
-  extern "C" __attribute__ ((visibility ("default"))) int TTIsInDebugger();
+extern "C" __attribute__ ((visibility ("default"))) int TTIsInDebugger();
 #else
-  int TTIsInDebugger(void);
+int TTIsInDebugger(void);
 #endif
 
-  // We leave the __asm__ in this macro so that when a break occurs, we don't have to step out of
-  // a "breakInDebugger" function.
-  #define TTDASSERT(xx) { if (!(xx)) { TTDPRINT(@"TTDASSERT failed: %s", #xx); \
-                                      if (TTIsInDebugger()) { __asm__("int $3\n" : : ); }; } \
-                        } ((void)0)
+// We leave the __asm__ in this macro so that when a break occurs, we don't have to step out of
+// a "breakInDebugger" function.
+#define TTDASSERT(xx) { if (!(xx)) { TTDPRINT(@"TTDASSERT failed: %s", #xx); \
+if (TTIsInDebugger()) { __asm__("int $3\n" : : ); }; } \
+} ((void)0)
 #else
-  #define TTDASSERT(xx) { if (!(xx)) { TTDPRINT(@"TTDASSERT failed: %s", #xx); } } ((void)0)
+#define TTDASSERT(xx) { if (!(xx)) { TTDPRINT(@"TTDASSERT failed: %s", #xx); } } ((void)0)
 #endif // #if TARGET_IPHONE_SIMULATOR
 
 #else
-  #define TTDASSERT(xx) ((void)0)
+#define TTDASSERT(xx) ((void)0)
 #endif // #ifdef DEBUG
 
 // Log-level based logging macros.
 #if TTLOGLEVEL_ERROR <= TTMAXLOGLEVEL
-  #define TTDERROR(xx, ...)  TTDPRINT(xx, ##__VA_ARGS__)
+#define TTDERROR(xx, ...)  TTDPRINT(xx, ##__VA_ARGS__)
 #else
-  #define TTDERROR(xx, ...)  ((void)0)
+#define TTDERROR(xx, ...)  ((void)0)
 #endif // #if TTLOGLEVEL_ERROR <= TTMAXLOGLEVEL
 
 #if TTLOGLEVEL_WARNING <= TTMAXLOGLEVEL
-  #define TTDWARNING(xx, ...)  TTDPRINT(xx, ##__VA_ARGS__)
+#define TTDWARNING(xx, ...)  TTDPRINT(xx, ##__VA_ARGS__)
 #else
-  #define TTDWARNING(xx, ...)  ((void)0)
+#define TTDWARNING(xx, ...)  ((void)0)
 #endif // #if TTLOGLEVEL_WARNING <= TTMAXLOGLEVEL
 
 #if TTLOGLEVEL_INFO <= TTMAXLOGLEVEL
-  #define TTDINFO(xx, ...)  TTDPRINT(xx, ##__VA_ARGS__)
+#define TTDINFO(xx, ...)  TTDPRINT(xx, ##__VA_ARGS__)
 #else
-  #define TTDINFO(xx, ...)  ((void)0)
+#define TTDINFO(xx, ...)  ((void)0)
 #endif // #if TTLOGLEVEL_INFO <= TTMAXLOGLEVEL
 
 #ifdef DEBUG
-  #define TTDCONDITIONLOG(condition, xx, ...) { if ((condition)) { \
-                                                  TTDPRINT(xx, ##__VA_ARGS__); \
-                                                } \
-                                              } ((void)0)
+#define TTDCONDITIONLOG(condition, xx, ...) { if ((condition)) { \
+TTDPRINT(xx, ##__VA_ARGS__); \
+} \
+} ((void)0)
 #else
-  #define TTDCONDITIONLOG(condition, xx, ...) ((void)0)
+#define TTDCONDITIONLOG(condition, xx, ...) ((void)0)
 #endif // #ifdef DEBUG

@@ -19,13 +19,13 @@
 
 @interface TTExtensionInfo : NSObject {
 @private
-  NSString* _id;
-  NSString* _name;
-  NSString* _description;
-  NSString* _version;
-  NSString* _copyright;
-  NSString* _license;
-  NSArray*  _authors;
+    NSString* _id;
+    NSString* _name;
+    NSString* _description;
+    NSString* _version;
+    NSString* _copyright;
+    NSString* _license;
+    NSArray*  _authors;
 }
 
 @property (nonatomic, readonly) NSString* identifier;

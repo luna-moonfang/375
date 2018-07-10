@@ -33,10 +33,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (id)authorWithName:(NSString*)name {
-  return [[[self alloc] initWithName: name
-                              github: nil
-                             twitter: nil
-                             website: nil] autorelease];
+    return [[[self alloc] initWithName: name
+                                github: nil
+                               twitter: nil
+                               website: nil] autorelease];
 }
 
 
@@ -45,10 +45,10 @@
               github: (NSString*)github
              twitter: (NSString*)twitter
              website: (NSString*)website {
-  return [[[self alloc] initWithName: name
-                              github: github
-                             twitter: twitter
-                             website: website] autorelease];
+    return [[[self alloc] initWithName: name
+                                github: github
+                               twitter: twitter
+                               website: website] autorelease];
 }
 
 
@@ -57,31 +57,31 @@
             github: (NSString*)github
            twitter: (NSString*)twitter
            website: (NSString*)website {
-	self = [super init];
-  if (self) {
-    self.name     = name;
-    self.github   = github;
-    self.twitter  = twitter;
-    self.website  = website;
-  }
-  return self;
+    self = [super init];
+    if (self) {
+        self.name     = name;
+        self.github   = github;
+        self.twitter  = twitter;
+        self.website  = website;
+    }
+    return self;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithName:@"Unknown" github:nil twitter:nil website:nil];
+    return [self initWithName:@"Unknown" github:nil twitter:nil website:nil];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
-  TT_RELEASE_SAFELY(_name);
-  TT_RELEASE_SAFELY(_github);
-  TT_RELEASE_SAFELY(_twitter);
-  TT_RELEASE_SAFELY(_website);
-
-  [super dealloc];
+    TT_RELEASE_SAFELY(_name);
+    TT_RELEASE_SAFELY(_github);
+    TT_RELEASE_SAFELY(_twitter);
+    TT_RELEASE_SAFELY(_website);
+    
+    [super dealloc];
 }
 
 

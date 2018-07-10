@@ -22,63 +22,63 @@ static NSBundle* globalBundle = nil;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTIsBundleURL(NSString* URL) {
-  return [URL hasPrefix:@"bundle://"];
+    return [URL hasPrefix:@"bundle://"];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTIsDocumentsURL(NSString* URL) {
-  return [URL hasPrefix:@"documents://"];
+    return [URL hasPrefix:@"documents://"];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTIsCachesURL(NSString* URL) {
-  return [URL hasPrefix:@"cache://"];
+    return [URL hasPrefix:@"cache://"];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 void TTSetDefaultBundle(NSBundle* bundle) {
-  [bundle retain];
-  [globalBundle release];
-  globalBundle = bundle;
+    [bundle retain];
+    [globalBundle release];
+    globalBundle = bundle;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 NSBundle* TTGetDefaultBundle() {
-  return (nil != globalBundle) ? globalBundle : [NSBundle mainBundle];
+    return (nil != globalBundle) ? globalBundle : [NSBundle mainBundle];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 NSString* TTPathForBundleResource(NSString* relativePath) {
-  NSString* resourcePath = [TTGetDefaultBundle() resourcePath];
-  return [resourcePath stringByAppendingPathComponent:relativePath];
+    NSString* resourcePath = [TTGetDefaultBundle() resourcePath];
+    return [resourcePath stringByAppendingPathComponent:relativePath];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 NSString* TTPathForDocumentsResource(NSString* relativePath) {
-  static NSString* documentsPath = nil;
-  if (nil == documentsPath) {
-    NSArray* dirs = NSSearchPathForDirectoriesInDomains(
-      NSDocumentDirectory, NSUserDomainMask, YES);
-    documentsPath = [[dirs objectAtIndex:0] retain];
-  }
-  return [documentsPath stringByAppendingPathComponent:relativePath];
+    static NSString* documentsPath = nil;
+    if (nil == documentsPath) {
+        NSArray* dirs = NSSearchPathForDirectoriesInDomains(
+                                                            NSDocumentDirectory, NSUserDomainMask, YES);
+        documentsPath = [[dirs objectAtIndex:0] retain];
+    }
+    return [documentsPath stringByAppendingPathComponent:relativePath];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 NSString* TTPathForCachesResource(NSString* relativePath) {
-  static NSString* cachesPath = nil;
-  if (nil == cachesPath) {
-    NSArray* dirs = NSSearchPathForDirectoriesInDomains(
-      NSCachesDirectory, NSUserDomainMask, YES);
-    cachesPath = [[dirs objectAtIndex:0] retain];
-  }
-  return [cachesPath stringByAppendingPathComponent:relativePath];
+    static NSString* cachesPath = nil;
+    if (nil == cachesPath) {
+        NSArray* dirs = NSSearchPathForDirectoriesInDomains(
+                                                            NSCachesDirectory, NSUserDomainMask, YES);
+        cachesPath = [[dirs objectAtIndex:0] retain];
+    }
+    return [cachesPath stringByAppendingPathComponent:relativePath];
 }
 

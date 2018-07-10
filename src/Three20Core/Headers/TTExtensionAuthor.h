@@ -19,10 +19,10 @@
 
 @interface TTExtensionAuthor : NSObject {
 @private
-  NSString* _name;
-  NSString* _github;
-  NSString* _twitter;
-  NSString* _website;
+    NSString* _name;
+    NSString* _github;
+    NSString* _twitter;
+    NSString* _website;
 }
 
 @property (nonatomic, copy) NSString* name;

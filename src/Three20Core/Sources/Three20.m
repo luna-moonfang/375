@@ -27,37 +27,37 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSInteger)majorVersion {
-  return [[[Three20Version componentsSeparatedByString:@"."] objectAtIndex:0] intValue];
+    return [[[Three20Version componentsSeparatedByString:@"."] objectAtIndex:0] intValue];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSInteger)minorVersion {
-  return [[[Three20Version componentsSeparatedByString:@"."] objectAtIndex:1] intValue];
+    return [[[Three20Version componentsSeparatedByString:@"."] objectAtIndex:1] intValue];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSInteger)bugfixVersion {
-  return [[[Three20Version componentsSeparatedByString:@"."] objectAtIndex:2] intValue];
+    return [[[Three20Version componentsSeparatedByString:@"."] objectAtIndex:2] intValue];
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSInteger)hotfixVersion {
-  NSArray* components = [Three20Version componentsSeparatedByString:@"."];
-  if ([components count] > 3) {
-    return [[components objectAtIndex:3] intValue];
-
-  } else {
-    return 0;
-  }
+    NSArray* components = [Three20Version componentsSeparatedByString:@"."];
+    if ([components count] > 3) {
+        return [[components objectAtIndex:3] intValue];
+        
+    } else {
+        return 0;
+    }
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSString*)version {
-  return Three20Version;
+    return Three20Version;
 }
 
 
