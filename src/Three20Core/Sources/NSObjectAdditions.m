@@ -26,8 +26,6 @@
 /**
  * Additions.
  */
-TT_FIX_CATEGORY_BUG(NSObjectAdditions)
-
 @implementation NSObject (TTAdditions)
 
 

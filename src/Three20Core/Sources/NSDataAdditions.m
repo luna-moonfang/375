@@ -28,8 +28,6 @@
 /**
  * Additions.
  */
-TT_FIX_CATEGORY_BUG(NSDataAdditions)
-
 @implementation NSData (TTCategory)
 
 
@@ -126,7 +124,7 @@ static const char encodingTable[] =
       bytes[length++] = (buffer[2] << 6) | buffer[3];
   }
 
-  realloc(bytes, length);
+  (void)realloc(bytes, length);
   return [NSData dataWithBytesNoCopy:bytes length:length];
 }
 

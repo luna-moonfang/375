@@ -27,8 +27,6 @@
 /**
  * Additions.
  */
-TT_FIX_CATEGORY_BUG(NSMutableDictionaryAdditions)
-
 @implementation NSMutableDictionary (TTCategory)
 
 
