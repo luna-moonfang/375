@@ -68,7 +68,7 @@
 #ifdef __cplusplus
   extern "C" __attribute__ ((visibility ("default"))) int TTIsInDebugger();
 #else
-  int TTIsInDebugger();
+  int TTIsInDebugger(void);
 #endif
 
   // We leave the __asm__ in this macro so that when a break occurs, we don't have to step out of
