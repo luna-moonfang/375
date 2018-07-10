@@ -15,6 +15,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGBase.h>
 
 /**
  * Gets the current system locale chosen by the user.
@@ -44,3 +45,5 @@ NSString* TTDescriptionForError(NSError* error);
  * TODO(jverkoey 04/19/2010): This should likely be locale-aware.
  */
 NSString* TTFormatInteger(NSInteger num);
+NSString* TTFormatFloating(CGFloat num);
+NSString* TTFormatNumber(NSNumber *num);
