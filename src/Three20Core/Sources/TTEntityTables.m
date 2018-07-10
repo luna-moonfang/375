@@ -214,7 +214,7 @@ static TTEntityTables* sharedInstance = nil;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (unsigned)retainCount {
+- (NSUInteger)retainCount {
   return NSUIntegerMax;
 }
 
