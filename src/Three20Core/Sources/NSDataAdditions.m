@@ -34,7 +34,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString*)md5Hash {
     unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5([self bytes], (CC_LONG)[self length], result);
+    CC_MD5(self.bytes, (CC_LONG)self.length, result);
     
     return [NSString stringWithFormat:
             @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
@@ -47,7 +47,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString*)sha1Hash {
     unsigned char result[CC_SHA1_DIGEST_LENGTH];
-    CC_SHA1([self bytes], (CC_LONG)[self length], result);
+    CC_SHA1(self.bytes, (CC_LONG)self.length, result);
     
     return [NSString stringWithFormat:
             @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
@@ -66,7 +66,7 @@ static const char encodingTable[] =
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (NSData*)dataWithBase64EncodedString:(NSString *)string {
-    if ([string length] == 0)
+    if (string.length == 0)
         return [NSData data];
     
     static char *decodingTable = NULL;
@@ -84,7 +84,7 @@ static const char encodingTable[] =
     const char *characters = [string cStringUsingEncoding:NSASCIIStringEncoding];
     if (characters == NULL)     //  Not an ASCII string!
         return nil;
-    char *bytes = malloc((([string length] + 3) / 4) * 3);
+    char *bytes = malloc(((string.length + 3) / 4) * 3);
     if (bytes == NULL)
         return nil;
     NSUInteger length = 0;
@@ -130,21 +130,21 @@ static const char encodingTable[] =
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString *)base64Encoding {
-    if ([self length] == 0)
+    if (self.length == 0)
         return @"";
     
-    char *characters = malloc((([self length] + 2) / 3) * 4);
+    char *characters = malloc(((self.length + 2) / 3) * 4);
     if (characters == NULL)
         return nil;
     NSUInteger length = 0;
     
     NSUInteger i = 0;
-    while (i < [self length])
+    while (i < self.length)
     {
         char buffer[3] = {0,0,0};
         short bufferLength = 0;
-        while (bufferLength < 3 && i < [self length])
-            buffer[bufferLength++] = ((char *)[self bytes])[i++];
+        while (bufferLength < 3 && i < self.length)
+            buffer[bufferLength++] = ((char *)self.bytes)[i++];
         
         // Encode the bytes in the buffer to four characters,
         // including padding "=" characters if necessary.

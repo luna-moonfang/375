@@ -33,7 +33,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setNonEmptyString:(NSString*)string forKey:(id)key {
     if (TTIsStringWithAnyText(string)) {
-        [self setObject:string forKey:key];
+        self[key] = string;
     }
 }
 

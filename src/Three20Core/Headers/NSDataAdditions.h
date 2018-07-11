@@ -38,7 +38,7 @@
  * Padding '=' characters are optional. Whitespace is ignored.
  * @return the NSData object
  */
-+ (id)dataWithBase64EncodedString:(NSString *)string;
++ (instancetype)dataWithBase64EncodedString:(NSString *)string;
 
 /**
  * Marshal the data into a base64 encoded representation

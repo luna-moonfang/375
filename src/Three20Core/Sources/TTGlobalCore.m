@@ -44,19 +44,19 @@ NSMutableDictionary* TTCreateNonRetainingDictionary() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTIsArrayWithItems(id object) {
-    return [object isKindOfClass:[NSArray class]] && [(NSArray*)object count] > 0;
+    return [object isKindOfClass:[NSArray class]] && ((NSArray*)object).count > 0;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTIsSetWithItems(id object) {
-    return [object isKindOfClass:[NSSet class]] && [(NSSet*)object count] > 0;
+    return [object isKindOfClass:[NSSet class]] && ((NSSet*)object).count > 0;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 BOOL TTIsStringWithAnyText(id object) {
-    return [object isKindOfClass:[NSString class]] && [(NSString*)object length] > 0;
+    return [object isKindOfClass:[NSString class]] && ((NSString*)object).length > 0;
 }
 
 

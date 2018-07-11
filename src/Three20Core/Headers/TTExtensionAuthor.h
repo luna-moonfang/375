@@ -30,17 +30,17 @@
 @property (nonatomic, copy) NSString* twitter;
 @property (nonatomic, copy) NSString* website;
 
-+ (id)authorWithName: (NSString*)name;
++ (instancetype)authorWithName: (NSString*)name;
 
-+ (id)authorWithName: (NSString*)name
++ (instancetype)authorWithName: (NSString*)name
               github: (NSString*)github
              twitter: (NSString*)twitter
              website: (NSString*)website;
 
 // Designated initializer
-- (id)initWithName: (NSString*)name
+- (instancetype)initWithName: (NSString*)name
             github: (NSString*)github
            twitter: (NSString*)twitter
-           website: (NSString*)website;
+           website: (NSString*)website NS_DESIGNATED_INITIALIZER;
 
 @end

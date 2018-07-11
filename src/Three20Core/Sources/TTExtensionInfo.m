@@ -38,7 +38,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         self.version = @"No version provided.";

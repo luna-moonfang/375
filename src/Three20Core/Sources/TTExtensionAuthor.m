@@ -32,7 +32,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-+ (id)authorWithName:(NSString*)name {
++ (instancetype)authorWithName:(NSString*)name {
     return [[[self alloc] initWithName: name
                                 github: nil
                                twitter: nil
@@ -41,7 +41,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-+ (id)authorWithName: (NSString*)name
++ (instancetype)authorWithName: (NSString*)name
               github: (NSString*)github
              twitter: (NSString*)twitter
              website: (NSString*)website {
@@ -53,7 +53,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)initWithName: (NSString*)name
+- (instancetype)initWithName: (NSString*)name
             github: (NSString*)github
            twitter: (NSString*)twitter
            website: (NSString*)website {
@@ -69,7 +69,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)init {
+- (instancetype)init {
     return [self initWithName:@"Unknown" github:nil twitter:nil website:nil];
 }
 

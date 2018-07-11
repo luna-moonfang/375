@@ -71,10 +71,10 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
                           methodWithPrefix: kLoadExtensionMethodPrefix] ? YES : NO;
     
     if (succeeded) {
-        [sTTLoadedExtensions setObject:extension forKey:extension.identifier];
+        sTTLoadedExtensions[extension.identifier] = extension;
         
     } else {
-        [sTTFailedExtensions setObject:extension forKey:extension.identifier];
+        sTTFailedExtensions[extension.identifier] = extension;
     }
     
     return succeeded;
@@ -98,11 +98,11 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
     
     NSDictionary* availableExtensions = [self availableExtensions];
     
-    if ([availableExtensions count] > 0) {
+    if (availableExtensions.count > 0) {
         TTExtensionLoader* loader = [[TTExtensionLoader alloc] init];
         
         for (NSString* extensionID in availableExtensions) {
-            TTExtensionInfo* extension = [availableExtensions objectForKey:extensionID];
+            TTExtensionInfo* extension = availableExtensions[extensionID];
             [loader loadExtension:extension];
         }
         
@@ -127,18 +127,17 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
                 
                 SEL methodSelector = method_getName(method);
                 
-                NSString* methodName = [NSString stringWithCString: sel_getName(methodSelector)
-                                                          encoding: NSUTF8StringEncoding];
+                NSString* methodName = @(sel_getName(methodSelector));
                 
                 if ([methodName hasPrefix:kLoadExtensionMethodPrefix]) {
                     NSString* extensionID = [methodName substringFromIndex:
-                                             [kLoadExtensionMethodPrefix length]];
+                                             kLoadExtensionMethodPrefix.length];
                     
                     TTExtensionInfo* extension = [loader extensionWithID:extensionID];
                     TTDASSERT(nil != extension);
                     
                     if (nil != extension) {
-                        [sTTAvailableExtensions setObject:extension forKey:extensionID];
+                        sTTAvailableExtensions[extensionID] = extension;
                     }
                 }
             }

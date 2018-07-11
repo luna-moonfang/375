@@ -86,7 +86,7 @@
 /**
  * Returns a string with all HTML tags removed.
  */
-- (NSString*)stringByRemovingHTMLTags;
+@property (nonatomic, readonly, copy) NSString *stringByRemovingHTMLTags;
 
 /**
  * Compares two strings expressing software versions.

@@ -54,7 +54,7 @@ NSBundle* TTGetDefaultBundle() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 NSString* TTPathForBundleResource(NSString* relativePath) {
-    NSString* resourcePath = [TTGetDefaultBundle() resourcePath];
+    NSString* resourcePath = TTGetDefaultBundle().resourcePath;
     return [resourcePath stringByAppendingPathComponent:relativePath];
 }
 
@@ -65,7 +65,7 @@ NSString* TTPathForDocumentsResource(NSString* relativePath) {
     if (nil == documentsPath) {
         NSArray* dirs = NSSearchPathForDirectoriesInDomains(
                                                             NSDocumentDirectory, NSUserDomainMask, YES);
-        documentsPath = [[dirs objectAtIndex:0] retain];
+        documentsPath = [dirs[0] retain];
     }
     return [documentsPath stringByAppendingPathComponent:relativePath];
 }
@@ -77,7 +77,7 @@ NSString* TTPathForCachesResource(NSString* relativePath) {
     if (nil == cachesPath) {
         NSArray* dirs = NSSearchPathForDirectoriesInDomains(
                                                             NSCachesDirectory, NSUserDomainMask, YES);
-        cachesPath = [[dirs objectAtIndex:0] retain];
+        cachesPath = [dirs[0] retain];
     }
     return [cachesPath stringByAppendingPathComponent:relativePath];
 }

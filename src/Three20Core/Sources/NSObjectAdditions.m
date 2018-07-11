@@ -34,8 +34,8 @@
     NSMethodSignature *sig = [self methodSignatureForSelector:selector];
     if (sig) {
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
-        [invo setTarget:self];
-        [invo setSelector:selector];
+        invo.target = self;
+        invo.selector = selector;
         [invo setArgument:&p1 atIndex:2];
         [invo setArgument:&p2 atIndex:3];
         [invo setArgument:&p3 atIndex:4];
@@ -61,8 +61,8 @@
     NSMethodSignature *sig = [self methodSignatureForSelector:selector];
     if (sig) {
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
-        [invo setTarget:self];
-        [invo setSelector:selector];
+        invo.target = self;
+        invo.selector = selector;
         [invo setArgument:&p1 atIndex:2];
         [invo setArgument:&p2 atIndex:3];
         [invo setArgument:&p3 atIndex:4];
@@ -89,8 +89,8 @@
     NSMethodSignature *sig = [self methodSignatureForSelector:selector];
     if (sig) {
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
-        [invo setTarget:self];
-        [invo setSelector:selector];
+        invo.target = self;
+        invo.selector = selector;
         [invo setArgument:&p1 atIndex:2];
         [invo setArgument:&p2 atIndex:3];
         [invo setArgument:&p3 atIndex:4];
@@ -118,8 +118,8 @@
     NSMethodSignature *sig = [self methodSignatureForSelector:selector];
     if (sig) {
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
-        [invo setTarget:self];
-        [invo setSelector:selector];
+        invo.target = self;
+        invo.selector = selector;
         [invo setArgument:&p1 atIndex:2];
         [invo setArgument:&p2 atIndex:3];
         [invo setArgument:&p3 atIndex:4];
@@ -148,8 +148,8 @@
     NSMethodSignature *sig = [self methodSignatureForSelector:selector];
     if (sig) {
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
-        [invo setTarget:self];
-        [invo setSelector:selector];
+        invo.target = self;
+        invo.selector = selector;
         [invo setArgument:&p1 atIndex:2];
         [invo setArgument:&p2 atIndex:3];
         [invo setArgument:&p3 atIndex:4];

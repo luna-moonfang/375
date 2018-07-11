@@ -51,7 +51,7 @@
 - (NSData*)             parser: (NSXMLParser*)parser
      resolveExternalEntityName: (NSString*)entityName
                       systemID: (NSString*)systemID {
-    return [[[TTEntityTables sharedInstance] iso88591] objectForKey:entityName];
+    return [TTEntityTables sharedInstance].iso88591[entityName];
 }
 
 
