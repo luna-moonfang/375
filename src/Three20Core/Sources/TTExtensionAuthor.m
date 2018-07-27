@@ -76,11 +76,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
-    TT_RELEASE_SAFELY(_name);
-    TT_RELEASE_SAFELY(_github);
-    TT_RELEASE_SAFELY(_twitter);
-    TT_RELEASE_SAFELY(_website);
-    
     [super dealloc];
 }
 

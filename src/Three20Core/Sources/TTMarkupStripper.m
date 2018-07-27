@@ -29,8 +29,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
-    TT_RELEASE_SAFELY(_strings);
-    
     [super dealloc];
 }
 
@@ -70,10 +68,8 @@
     NSXMLParser*  parser    = [[NSXMLParser alloc] initWithData:data];
     parser.delegate = self;
     [parser parse];
-    TT_RELEASE_SAFELY(parser);
     
     NSString* result = [_strings componentsJoinedByString:@""];
-    TT_RELEASE_SAFELY(_strings);
     
     return result;
 }

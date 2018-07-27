@@ -104,8 +104,6 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
             TTExtensionInfo* extension = availableExtensions[extensionID];
             [loader loadExtension:extension];
         }
-        
-        TT_RELEASE_SAFELY(loader);
     }
 }
 
@@ -140,8 +138,6 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
                     }
                 }
             }
-            
-            TT_RELEASE_SAFELY(loader);
         }
     }
     
