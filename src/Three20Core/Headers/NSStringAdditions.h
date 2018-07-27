@@ -26,7 +26,7 @@
 /**
  * Determines if the string contains only whitespace and newlines.
  */
-- (BOOL)isWhitespaceAndNewlines;
+@property (NS_NONATOMIC_IOSONLY, getter=isWhitespaceAndNewlines, readonly) BOOL whitespaceAndNewlines;
 
 /**
  * Determines if the string is empty or contains only whitespace.
@@ -86,7 +86,7 @@
 /**
  * Returns a string with all HTML tags removed.
  */
-@property (nonatomic, readonly, copy) NSString *stringByRemovingHTMLTags;
+- (NSString*)stringByRemovingHTMLTags;
 
 /**
  * Compares two strings expressing software versions.
