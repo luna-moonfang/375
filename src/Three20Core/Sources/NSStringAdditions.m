@@ -160,7 +160,9 @@
                                                                              (CFStringRef)@"!#$%&'()*+,/:;=?@[]",
                                                                              kCFStringEncodingUTF8);
     
-    NSString *urlEncoded = [NSString stringWithString:(NSString *)cfUrlEncodedString];
+//    NSString *urlEncoded = [NSString stringWithString:(NSString *)cfUrlEncodedString];
+    NSString *urlEncoded = [NSString stringWithString:(__bridge NSString *)cfUrlEncodedString];
+//    NSString *urlEncoded = [NSString stringWithString:(NSString *)CFBridgingRelease(cfUrlEncodedString)];
     CFRelease(cfUrlEncodedString);
     return urlEncoded;
 }
