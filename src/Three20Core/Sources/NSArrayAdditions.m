@@ -39,7 +39,6 @@
             [delegate performSelector:selector];
         }
     }
-    [copy release];
 }
 
 
@@ -52,7 +51,6 @@
             [delegate performSelector:selector withObject:p1];
         }
     }
-    [copy release];
 }
 
 
@@ -65,7 +63,6 @@
             [delegate performSelector:selector withObject:p1 withObject:p2];
         }
     }
-    [copy release];
 }
 
 
@@ -78,7 +75,6 @@
             [delegate performSelector:selector withObject:p1 withObject:p2 withObject:p3];
         }
     }
-    [copy release];
 }
 
 

@@ -33,10 +33,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 + (instancetype)authorWithName:(NSString*)name {
-    return [[[self alloc] initWithName: name
+    return [[self alloc] initWithName: name
                                 github: nil
                                twitter: nil
-                               website: nil] autorelease];
+                               website: nil];
 }
 
 
@@ -45,10 +45,10 @@
               github: (NSString*)github
              twitter: (NSString*)twitter
              website: (NSString*)website {
-    return [[[self alloc] initWithName: name
+    return [[self alloc] initWithName: name
                                 github: github
                                twitter: twitter
-                               website: website] autorelease];
+                               website: website];
 }
 
 
@@ -71,12 +71,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (instancetype)init {
     return [self initWithName:@"Unknown" github:nil twitter:nil website:nil];
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)dealloc {
-    [super dealloc];
 }
 
 

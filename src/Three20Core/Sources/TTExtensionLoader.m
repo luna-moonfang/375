@@ -58,7 +58,7 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
     TTExtensionInfo* extension = [self callExtensionID: extensionID
                                       methodWithPrefix: kExtensionInfoMethodPrefix];
     if (nil == extension) {
-        extension = [[[TTExtensionInfo alloc] init] autorelease];
+        extension = [[TTExtensionInfo alloc] init];
     }
     extension.identifier = extensionID;
     return extension;

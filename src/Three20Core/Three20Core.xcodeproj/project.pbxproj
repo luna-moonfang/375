@@ -9,32 +9,32 @@
 /* Begin PBXBuildFile section */
 		660E7375135A560A00531398 /* Three20Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 660E7374135A560A00531398 /* Three20Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6656B2531354035900B34AB5 /* TTAvailability.h in Headers */ = {isa = PBXBuildFile; fileRef = 6656B2521354035900B34AB5 /* TTAvailability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6656B2551354035F00B34AB5 /* TTAvailability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6656B2541354035F00B34AB5 /* TTAvailability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		66A0530A132EB47900132434 /* Three20.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A05309132EB47900132434 /* Three20.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6656B2551354035F00B34AB5 /* TTAvailability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6656B2541354035F00B34AB5 /* TTAvailability.m */; };
+		66A0530A132EB47900132434 /* Three20.m in Sources */ = {isa = PBXBuildFile; fileRef = 66A05309132EB47900132434 /* Three20.m */; };
 		66A0530C132EB47F00132434 /* Three20.h in Headers */ = {isa = PBXBuildFile; fileRef = 66A0530B132EB47F00132434 /* Three20.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		66ADC9091290B23A00855386 /* TTExtensionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ADC9071290B23A00855386 /* TTExtensionInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66ADC9091290B23A00855386 /* TTExtensionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ADC9071290B23A00855386 /* TTExtensionInfo.m */; };
 		66ADC90F1290B24D00855386 /* TTExtensionInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 66ADC90E1290B24D00855386 /* TTExtensionInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		66ADCE681291BC1E00855386 /* TTExtensionInfoPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 66ADCE661291BC1E00855386 /* TTExtensionInfoPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		66ADCE871291BEAE00855386 /* TTExtensionAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ADCE811291BEAE00855386 /* TTExtensionAuthor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66ADCE871291BEAE00855386 /* TTExtensionAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ADCE811291BEAE00855386 /* TTExtensionAuthor.m */; };
 		66ADCE8B1291BEBB00855386 /* TTExtensionAuthor.h in Headers */ = {isa = PBXBuildFile; fileRef = 66ADCE881291BEBB00855386 /* TTExtensionAuthor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		66CE68FB135B320F00E127E2 /* Three20Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CE68FA135B320F00E127E2 /* Three20Version.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		66ECA257128DFE28006C78C2 /* TTExtensionLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ECA251128DFE28006C78C2 /* TTExtensionLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		66CE68FB135B320F00E127E2 /* Three20Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CE68FA135B320F00E127E2 /* Three20Version.m */; };
+		66ECA257128DFE28006C78C2 /* TTExtensionLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 66ECA251128DFE28006C78C2 /* TTExtensionLoader.m */; };
 		66ECA25B128DFE34006C78C2 /* TTExtensionLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 66ECA258128DFE34006C78C2 /* TTExtensionLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E178E811183C8E5003B099E /* TTGlobalCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E7B1183C8E5003B099E /* TTGlobalCore.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178E821183C8E5003B099E /* TTGlobalCoreLocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E7C1183C8E5003B099E /* TTGlobalCoreLocale.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178E831183C8E5003B099E /* TTGlobalCorePaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E7D1183C8E5003B099E /* TTGlobalCorePaths.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178E9B1183C8F6003B099E /* NSArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E8D1183C8F6003B099E /* NSArrayAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178E9C1183C8F6003B099E /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E8E1183C8F6003B099E /* NSDataAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178E9D1183C8F6003B099E /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E8F1183C8F6003B099E /* NSDateAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178E9E1183C8F6003B099E /* NSMutableArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E901183C8F6003B099E /* NSMutableArrayAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178EA01183C8F6003B099E /* NSObjectAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E921183C8F6003B099E /* NSObjectAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E178EA11183C8F6003B099E /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E931183C8F6003B099E /* NSStringAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6E178E811183C8E5003B099E /* TTGlobalCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E7B1183C8E5003B099E /* TTGlobalCore.m */; };
+		6E178E821183C8E5003B099E /* TTGlobalCoreLocale.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E7C1183C8E5003B099E /* TTGlobalCoreLocale.m */; };
+		6E178E831183C8E5003B099E /* TTGlobalCorePaths.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E7D1183C8E5003B099E /* TTGlobalCorePaths.m */; };
+		6E178E9B1183C8F6003B099E /* NSArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E8D1183C8F6003B099E /* NSArrayAdditions.m */; };
+		6E178E9C1183C8F6003B099E /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E8E1183C8F6003B099E /* NSDataAdditions.m */; };
+		6E178E9D1183C8F6003B099E /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E8F1183C8F6003B099E /* NSDateAdditions.m */; };
+		6E178E9E1183C8F6003B099E /* NSMutableArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E901183C8F6003B099E /* NSMutableArrayAdditions.m */; };
+		6E178EA01183C8F6003B099E /* NSObjectAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E921183C8F6003B099E /* NSObjectAdditions.m */; };
+		6E178EA11183C8F6003B099E /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E931183C8F6003B099E /* NSStringAdditions.m */; };
 		6E3680E311F9D4130029046C /* libThree20Core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF31F3A0F352DF5000DE5D2 /* libThree20Core.a */; };
-		6E55A4971183C946002768DE /* TTDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E55A4951183C946002768DE /* TTDebug.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6E55A49A1183C94F002768DE /* TTMarkupStripper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E55A4981183C94F002768DE /* TTMarkupStripper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6E55A4971183C946002768DE /* TTDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E55A4951183C946002768DE /* TTDebug.m */; };
+		6E55A49A1183C94F002768DE /* TTMarkupStripper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E55A4981183C94F002768DE /* TTMarkupStripper.m */; };
 		6E55A49C1183C956002768DE /* TTMarkupStripper.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E55A49B1183C956002768DE /* TTMarkupStripper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E607C6F11AF286B00C93CD4 /* CoreMarkupStripperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E607C6E11AF286B00C93CD4 /* CoreMarkupStripperTests.m */; };
-		6E607CF111AF2FE400C93CD4 /* TTEntityTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E607CEE11AF2FCB00C93CD4 /* TTEntityTables.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6E607CF111AF2FE400C93CD4 /* TTEntityTables.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E607CEE11AF2FCB00C93CD4 /* TTEntityTables.m */; };
 		6E607CF211AF2FE400C93CD4 /* TTEntityTables.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E607CF011AF2FD800C93CD4 /* TTEntityTables.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E6454551184BE8600F08CB1 /* Three20Core.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6454531184BE8600F08CB1 /* Three20Core.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E6454561184BE8600F08CB1 /* Three20Core+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E6454541184BE8600F08CB1 /* Three20Core+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,7 +43,7 @@
 		6EB460601183CFB400685649 /* NSDateAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E178EB21183C906003B099E /* NSDateAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EB460611183CFB700685649 /* NSMutableArrayAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E178EB31183C906003B099E /* NSMutableArrayAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EB460621183CFB800685649 /* NSMutableDictionaryAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E178EB41183C906003B099E /* NSMutableDictionaryAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6EB460631183CFB900685649 /* NSMutableDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E911183C8F6003B099E /* NSMutableDictionaryAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EB460631183CFB900685649 /* NSMutableDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E178E911183C8F6003B099E /* NSMutableDictionaryAdditions.m */; };
 		6EB460641183CFB900685649 /* NSObjectAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E178EB51183C906003B099E /* NSObjectAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EB460651183CFBC00685649 /* NSStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E178EB61183C906003B099E /* NSStringAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6EB460691183CFCA00685649 /* TTCorePreprocessorMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E178E771183C8D3003B099E /* TTCorePreprocessorMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -55,7 +55,7 @@
 		6EB460901183D14800685649 /* CoreAdditionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB4608E1183D14800685649 /* CoreAdditionTests.m */; };
 		6EB460911183D14800685649 /* CoreGlobalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB4608F1183D14800685649 /* CoreGlobalTests.m */; };
 		6EDAE9C7118CA1720008133C /* TTGlobalCoreRects.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDAE9C6118CA1720008133C /* TTGlobalCoreRects.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6EDAE9C9118CA1790008133C /* TTGlobalCoreRects.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDAE9C8118CA1790008133C /* TTGlobalCoreRects.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6EDAE9C9118CA1790008133C /* TTGlobalCoreRects.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDAE9C8118CA1790008133C /* TTGlobalCoreRects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -441,7 +441,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		668E63EA131A42F500ACE4AB /* Lint */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -449,7 +449,7 @@
 			name = Lint;
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = "/usr/bin/env python ../scripts/lint";
 			shellScript = "";
 			showEnvVarsInLog = 0;

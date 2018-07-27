@@ -57,7 +57,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSString*)stringByRemovingHTMLTags {
-    TTMarkupStripper* stripper = [[[TTMarkupStripper alloc] init] autorelease];
+    TTMarkupStripper* stripper = [[TTMarkupStripper alloc] init];
     return [stripper parse:self];
 }
 
@@ -70,7 +70,7 @@
 - (NSDictionary*)queryDictionaryUsingEncoding:(NSStringEncoding)encoding {
     NSCharacterSet* delimiterSet = [NSCharacterSet characterSetWithCharactersInString:@"&;"];
     NSMutableDictionary* pairs = [NSMutableDictionary dictionary];
-    NSScanner* scanner = [[[NSScanner alloc] initWithString:self] autorelease];
+    NSScanner* scanner = [[NSScanner alloc] initWithString:self];
     while (!scanner.atEnd) {
         NSString* pairString = nil;
         [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
@@ -92,7 +92,7 @@
 - (NSDictionary*)queryContentsUsingEncoding:(NSStringEncoding)encoding {
     NSCharacterSet* delimiterSet = [NSCharacterSet characterSetWithCharactersInString:@"&;"];
     NSMutableDictionary* pairs = [NSMutableDictionary dictionary];
-    NSScanner* scanner = [[[NSScanner alloc] initWithString:self] autorelease];
+    NSScanner* scanner = [[NSScanner alloc] initWithString:self];
     while (!scanner.atEnd) {
         NSString* pairString = nil;
         [scanner scanUpToCharactersFromSet:delimiterSet intoString:&pairString];
@@ -141,7 +141,7 @@
 - (NSString*)stringByAddingURLEncodedQueryDictionary:(NSDictionary*)query {
     NSMutableDictionary* encodedQuery = [NSMutableDictionary dictionaryWithCapacity:query.count];
     
-    for (NSString* key in [query keyEnumerator]) {
+    for (__strong NSString* key in [query keyEnumerator]) {
         NSParameterAssert([key respondsToSelector:@selector(urlEncoded)]);
         NSString* value = query[key];
         NSParameterAssert([value respondsToSelector:@selector(urlEncoded)]);

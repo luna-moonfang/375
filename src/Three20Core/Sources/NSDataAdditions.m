@@ -157,10 +157,9 @@ static const char encodingTable[] =
             characters[length++] = encodingTable[buffer[2] & 0x3F];
         else characters[length++] = '=';
     }
-    
-    return [[[NSString alloc] initWithBytesNoCopy:characters length:length
-                                         encoding:NSASCIIStringEncoding freeWhenDone:YES]
-            autorelease];
+
+    return [[NSString alloc] initWithBytesNoCopy:characters length:length
+                                         encoding:NSASCIIStringEncoding freeWhenDone:YES];
 }
 // end recycled base64 code
 ///////////////////////////////////////////////////////////////////////////////////////////////////
