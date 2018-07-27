@@ -72,7 +72,6 @@ static NSMutableDictionary* sTTFailedExtensions     = nil;
     
     if (succeeded) {
         sTTLoadedExtensions[extension.identifier] = extension;
-        
     } else {
         sTTFailedExtensions[extension.identifier] = extension;
     }

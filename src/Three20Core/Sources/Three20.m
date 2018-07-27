@@ -48,7 +48,6 @@
     NSArray* components = [Three20Version componentsSeparatedByString:@"."];
     if (components.count > 3) {
         return [components[3] intValue];
-        
     } else {
         return 0;
     }

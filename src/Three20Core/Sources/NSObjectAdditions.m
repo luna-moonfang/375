@@ -44,11 +44,9 @@
             id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
-            
         } else {
             return nil;
         }
-        
     } else {
         return nil;
     }
@@ -72,11 +70,9 @@
             id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
-            
         } else {
             return nil;
         }
-        
     } else {
         return nil;
     }
@@ -101,11 +97,9 @@
             id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
-            
         } else {
             return nil;
         }
-        
     } else {
         return nil;
     }
@@ -131,11 +125,9 @@
             id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
-            
         } else {
             return nil;
         }
-        
     } else {
         return nil;
     }
@@ -162,11 +154,9 @@
             id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
-            
         } else {
             return nil;
         }
-        
     } else {
         return nil;
     }

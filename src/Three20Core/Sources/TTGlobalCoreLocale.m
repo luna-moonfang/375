@@ -26,7 +26,6 @@ NSLocale* TTCurrentLocale() {
     if (languages.count > 0) {
         NSString* currentLanguage = languages[0];
         return [[[NSLocale alloc] initWithLocaleIdentifier:currentLanguage] autorelease];
-        
     } else {
         return [NSLocale currentLocale];
     }
@@ -54,10 +53,8 @@ NSString* TTDescriptionForError(NSError* error) {
         // Note: If new error codes are added here, be sure to document them in the header.
         if (error.code == NSURLErrorTimedOut) {
             return TTLocalizedString(@"Connection Timed Out", @"");
-            
         } else if (error.code == NSURLErrorNotConnectedToInternet) {
             return TTLocalizedString(@"No Internet Connection", @"");
-            
         } else {
             return TTLocalizedString(@"Connection Error", @"");
         }

@@ -108,7 +108,6 @@
             }
             if (kvPair.count == 1) {
                 [values addObject:[NSNull null]];
-                
             } else if (kvPair.count == 2) {
                 NSString* value = [kvPair[1]
                                    stringByReplacingPercentEscapesUsingEncoding:encoding];
@@ -133,7 +132,6 @@
     NSString* params = [pairs componentsJoinedByString:@"&"];
     if ([self rangeOfString:@"?"].location == NSNotFound) {
         return [self stringByAppendingFormat:@"?%@", params];
-        
     } else {
         return [self stringByAppendingFormat:@"&%@", params];
     }
@@ -186,10 +184,8 @@
     // If one has an alpha part and the other doesn't, the one without is newer
     if (oneComponents.count < twoComponents.count) {
         return NSOrderedDescending;
-        
     } else if (oneComponents.count > twoComponents.count) {
         return NSOrderedAscending;
-        
     } else if (oneComponents.count == 1) {
         // Neither has an alpha part, and we know the main parts are the same
         return NSOrderedSame;
