@@ -3,7 +3,7 @@
 //
 
 #ifdef __OBJC__
-  #import <Foundation/Foundation.h>
-  #import <UIKit/UIKit.h>
-  #import <Three20Core/Three20Core.h>
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <Three20Core/Three20Core.h>
 #endif
