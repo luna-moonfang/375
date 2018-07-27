@@ -202,5 +202,10 @@
     }
 }
 
+- (id)tbk_performSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2 withObject:(id)object3 {
+    typedef id (*MethodIMP)(id, SEL, id, id, id);
+    MethodIMP method = (MethodIMP)[self methodForSelector:aSelector];
+    return method(self, aSelector, object1, object2, object3);
+}
 
 @end

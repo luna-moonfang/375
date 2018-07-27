@@ -31,4 +31,10 @@
 - (id)performSelector:(SEL)selector withObject:(id)p1 withObject:(id)p2 withObject:(id)p3
            withObject:(id)p4 withObject:(id)p5 withObject:(id)p6 withObject:(id)p7;
 
+// TODO: 根据 https://stackoverflow.com/a/11906871/913522
+// NSInvocation 应该替换为 methodForSelector, 参考 https://stackoverflow.com/a/11906631/913522
+// 先添加一个, 后续添加 4-7 个参数的版本, 以及 instanceMethodForSelector 的类方法版本
+// 需要参考其他 NSObject 的 runtime 类的 category
+- (id)tbk_performSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2 withObject:(id)object3;
+
 @end
