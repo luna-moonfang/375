@@ -40,15 +40,12 @@ static const CGFloat kGroupSpacing    = 10;
     frame.origin.x = kFramePadding;
     frame.origin.y = yOffset;
     frame.size.width = 320 - kFramePadding * 2;
-    frame.size.height = [text sizeWithFont:label.font
-                         constrainedToSize:CGSizeMake(frame.size.width, 10000)].height;
+    frame.size.height = [text boundingRectWithSize:CGSizeMake(frame.size.width, 10000) options:0 attributes:nil context:nil].size.height;
     label.frame = frame;
     
     [_scrollView addSubview:label];
     
     yOffset += label.frame.size.height + kElementSpacing;
-    
-    TT_RELEASE_SAFELY(label);
     
     return yOffset;
 }
@@ -64,15 +61,12 @@ static const CGFloat kGroupSpacing    = 10;
     frame.origin.x = kFramePadding;
     frame.origin.y = yOffset;
     frame.size.width = 320 - kFramePadding * 2;
-    frame.size.height = [text sizeWithFont:label.font
-                         constrainedToSize:CGSizeMake(frame.size.width, 10000)].height;
+    frame.size.height = [text boundingRectWithSize:CGSizeMake(frame.size.width, 10000) options:0 attributes:nil context:nil].size.height;
     label.frame = frame;
     
     [_scrollView addSubview:label];
     
     yOffset += label.frame.size.height + kElementSpacing;
-    
-    TT_RELEASE_SAFELY(label);
     
     return yOffset;
 }
@@ -141,14 +135,6 @@ static const CGFloat kGroupSpacing    = 10;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void) viewDidUnload {
-    [super viewDidUnload];
-    
-    TT_RELEASE_SAFELY(_scrollView);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -179,7 +165,7 @@ static const CGFloat kGroupSpacing    = 10;
     TTDPRINT(@"------------------------");
     TTDCONDITIONLOG(true, @"This will always display because the condition is \"true\"");
     TTDCONDITIONLOG(false, @"This will never display because the condition is \"false\"");
-    TTDCONDITIONLOG(rand()%2, @"This will randomly display because the condition is \"rand()%2\"");
+    TTDCONDITIONLOG(rand()%2, @"This will randomly display because the condition is \"rand()%%2\"");
     
     TTDPRINT(@"");
     TTDPRINT(@"Showing TTDASSERT.");
