@@ -38,13 +38,4 @@
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void) dealloc {
-    TT_RELEASE_SAFELY(_window);
-    TT_RELEASE_SAFELY(_controller);
-    
-    [super dealloc];
-}
-
-
 @end
