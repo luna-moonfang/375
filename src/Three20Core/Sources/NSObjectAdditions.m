@@ -36,12 +36,18 @@
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
         invo.target = self;
         invo.selector = selector;
-        [invo setArgument:&p1 atIndex:2];
-        [invo setArgument:&p2 atIndex:3];
-        [invo setArgument:&p3 atIndex:4];
+        [invo retainArguments];
+        
+        __unsafe_unretained id argument1 = p1;
+        __unsafe_unretained id argument2 = p2;
+        __unsafe_unretained id argument3 = p3;
+        
+        [invo setArgument:&argument1 atIndex:2];
+        [invo setArgument:&argument2 atIndex:3];
+        [invo setArgument:&argument3 atIndex:4];
         [invo invoke];
         if (sig.methodReturnLength) {
-            id anObject;
+            __unsafe_unretained id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
         } else {
@@ -61,13 +67,20 @@
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
         invo.target = self;
         invo.selector = selector;
-        [invo setArgument:&p1 atIndex:2];
-        [invo setArgument:&p2 atIndex:3];
-        [invo setArgument:&p3 atIndex:4];
-        [invo setArgument:&p4 atIndex:5];
+        [invo retainArguments];
+        
+        __unsafe_unretained id argument1 = p1;
+        __unsafe_unretained id argument2 = p2;
+        __unsafe_unretained id argument3 = p3;
+        __unsafe_unretained id argument4 = p4;
+        
+        [invo setArgument:&argument1 atIndex:2];
+        [invo setArgument:&argument2 atIndex:3];
+        [invo setArgument:&argument3 atIndex:4];
+        [invo setArgument:&argument4 atIndex:5];
         [invo invoke];
         if (sig.methodReturnLength) {
-            id anObject;
+            __unsafe_unretained id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
         } else {
@@ -87,14 +100,22 @@
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
         invo.target = self;
         invo.selector = selector;
-        [invo setArgument:&p1 atIndex:2];
-        [invo setArgument:&p2 atIndex:3];
-        [invo setArgument:&p3 atIndex:4];
-        [invo setArgument:&p4 atIndex:5];
-        [invo setArgument:&p5 atIndex:6];
+        [invo retainArguments];
+        
+        __unsafe_unretained id argument1 = p1;
+        __unsafe_unretained id argument2 = p2;
+        __unsafe_unretained id argument3 = p3;
+        __unsafe_unretained id argument4 = p4;
+        __unsafe_unretained id argument5 = p5;
+        
+        [invo setArgument:&argument1 atIndex:2];
+        [invo setArgument:&argument2 atIndex:3];
+        [invo setArgument:&argument3 atIndex:4];
+        [invo setArgument:&argument4 atIndex:5];
+        [invo setArgument:&argument5 atIndex:6];
         [invo invoke];
         if (sig.methodReturnLength) {
-            id anObject;
+            __unsafe_unretained id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
         } else {
@@ -114,15 +135,24 @@
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
         invo.target = self;
         invo.selector = selector;
-        [invo setArgument:&p1 atIndex:2];
-        [invo setArgument:&p2 atIndex:3];
-        [invo setArgument:&p3 atIndex:4];
-        [invo setArgument:&p4 atIndex:5];
-        [invo setArgument:&p5 atIndex:6];
-        [invo setArgument:&p6 atIndex:7];
+        [invo retainArguments];
+        
+        __unsafe_unretained id argument1 = p1;
+        __unsafe_unretained id argument2 = p2;
+        __unsafe_unretained id argument3 = p3;
+        __unsafe_unretained id argument4 = p4;
+        __unsafe_unretained id argument5 = p5;
+        __unsafe_unretained id argument6 = p6;
+        
+        [invo setArgument:&argument1 atIndex:2];
+        [invo setArgument:&argument2 atIndex:3];
+        [invo setArgument:&argument3 atIndex:4];
+        [invo setArgument:&argument4 atIndex:5];
+        [invo setArgument:&argument5 atIndex:6];
+        [invo setArgument:&argument6 atIndex:7];
         [invo invoke];
         if (sig.methodReturnLength) {
-            id anObject;
+            __unsafe_unretained id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
         } else {
@@ -142,16 +172,26 @@
         NSInvocation* invo = [NSInvocation invocationWithMethodSignature:sig];
         invo.target = self;
         invo.selector = selector;
-        [invo setArgument:&p1 atIndex:2];
-        [invo setArgument:&p2 atIndex:3];
-        [invo setArgument:&p3 atIndex:4];
-        [invo setArgument:&p4 atIndex:5];
-        [invo setArgument:&p5 atIndex:6];
-        [invo setArgument:&p6 atIndex:7];
-        [invo setArgument:&p7 atIndex:8];
+        [invo retainArguments];
+        
+        __unsafe_unretained id argument1 = p1;
+        __unsafe_unretained id argument2 = p2;
+        __unsafe_unretained id argument3 = p3;
+        __unsafe_unretained id argument4 = p4;
+        __unsafe_unretained id argument5 = p5;
+        __unsafe_unretained id argument6 = p6;
+        __unsafe_unretained id argument7 = p7;
+        
+        [invo setArgument:&argument1 atIndex:2];
+        [invo setArgument:&argument2 atIndex:3];
+        [invo setArgument:&argument3 atIndex:4];
+        [invo setArgument:&argument4 atIndex:5];
+        [invo setArgument:&argument5 atIndex:6];
+        [invo setArgument:&argument6 atIndex:7];
+        [invo setArgument:&argument7 atIndex:8];
         [invo invoke];
         if (sig.methodReturnLength) {
-            id anObject;
+            __unsafe_unretained id anObject;
             [invo getReturnValue:&anObject];
             return anObject;
         } else {
